@@ -2,7 +2,7 @@
 CursoAí é um projeto acadêmico visando a construção de uma plataforma online utilizando tecnologias como PHP e MySQL.
 
 ## Requisitos funcionais
- - [ ] O sistema permitirá que usuários sejam
+ - [x] O sistema permitirá que usuários sejam
  cadastrados, classificando-os como:
  usuário comum ou Administrador
  - [ ] O sistema permitirá que os usuários façam alterações em seus cadastros.
@@ -20,8 +20,8 @@ de cursos no sistema.
  - [ ] Um usuário não pode fazer mais de um curso na mesma data/horário.
 
 ## Requisitos não funcionais
- - [ ] O sistema deve ser desenvolvido em linguagem PHP.
- - [ ] O banco de dados deve ser desenvolvido no MySQL.
+ - [x] O sistema deve ser desenvolvido em linguagem PHP.
+ - [x] O banco de dados deve ser desenvolvido no MySQL.
  - [ ] A interface deve ser agradável e de fácil utilização.
  - [ ] O aplicativo deve consumir poucos recursos do navegador
  - [ ] O aplicativo não deverá armazenar dados localmente, sendo estes redirecionados a um
