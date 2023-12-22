@@ -5,7 +5,7 @@
         // Auth
         $router->setNamespace("\App\modules\auth");
         $router->mount("/auth", function() use ($router) {
-            $router->get("/signUp","AuthController@signUp");
+            $router->post("/signUp","AuthController@signUp");
         });
 
     });
