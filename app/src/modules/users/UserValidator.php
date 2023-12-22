@@ -37,7 +37,7 @@ use Exception;
                     throw new Exception("Email inválido.");
                 }
 
-                if(strlen($email) <= 5) { 
+                if(strlen($email) < 5) { 
                     throw new Exception("Email inválido");
                 }
             } catch (\Throwable $th) {

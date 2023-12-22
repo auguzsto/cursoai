@@ -2,9 +2,7 @@
 
 namespace App\modules\auth;
 use App\core\Controller;
-use App\core\Database;
 use App\modules\users\User;
-use Exception;
 
     class AuthController extends Controller {
 
