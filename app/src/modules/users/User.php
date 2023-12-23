@@ -27,7 +27,7 @@ use App\modules\users\UserValidator;
                 $user->full_name = UserValidator::full_name($map["full_name"]) ?? $map['full_name'];
                 $user->login = UserValidator::login($map["login"]) ?? $map['login'];
                 $user->email = UserValidator::email($map["email"]) ?? $map['email'];
-                $user->password = UserValidator::password($map["password"]) ?? password_hash($map['password'], PASSWORD_BCRYPT);
+                $user->password = UserValidator::password($map["password"]) ?? $map['password'];;
                 $user->birth = UserValidator::birth($map["birth"]) ?? $map['birth'];
                 $user->phone = UserValidator::phone($map["phone"]) ?? $map['phone'];
                 $user->address = UserValidator::address($map["address"]) ?? $map['address'];

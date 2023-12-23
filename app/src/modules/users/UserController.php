@@ -1,13 +1,16 @@
 <?php
-use App\core\Database;
-use App\modules\users\User;
+namespace App\modules\users;
+use Exception;
+use App\core\Controller;
 
-    class UserController {
+    class UserController extends Controller {
 
-        static public function create(User $user): void {
+        protected string $table = "users";
+
+        public function findByEmail(string $email): array {
             try {
-                $db = Database::getInstance();
-                $db->insert((array) $user, "users");
+                $finder = $this->db()->select("*", $this->table)->where("email = '$email'")->toArray();
+                return $finder;
             } catch (\Throwable $th) {
                 throw $th;
             }

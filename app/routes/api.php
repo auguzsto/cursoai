@@ -12,6 +12,7 @@ error_reporting(0); // SET 0 FOR PROD, SET -1 FOR DEVELOPEMENT
         // Auth
         $router->setNamespace("\App\modules\auth");
         $router->mount("/auth", function() use ($router) {
+            $router->get("/signIn","AuthController@signIn");
             $router->post("/signUp","AuthController@signUp");
         });
 
