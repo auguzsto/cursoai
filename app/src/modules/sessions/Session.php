@@ -34,4 +34,13 @@ use App\modules\sessions\SessionValidator;
                 throw $th;
             }
         }
+
+        static public function hasExpiredSession(): void {
+            try {
+                $sessionController = new SessionController();
+                $sessionController->expired();
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
     }
