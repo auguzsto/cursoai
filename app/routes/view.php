@@ -1,6 +1,12 @@
 <?php
+
+use App\modules\sessions\Session;
 error_reporting(0); // SET 0 FOR PROD, SET -1 FOR DEVELOPEMENT
 
+    $router->before("GET|POST", "/", function() {
+        Session::hasExpiredSession();
+    });
+
     $router->get("/", function() {
-        echo "Root view";
+        echo "Root view with middleware";
     });

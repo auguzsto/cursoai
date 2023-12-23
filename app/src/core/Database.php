@@ -102,12 +102,12 @@ class Database {
     }
 
     public function select(string $columns, string $table): self {
-        $this->query = "SELECT $columns FROM $table WHERE deleted_at IS NULL";
+        $this->query = "SELECT $columns FROM $table";
         return $this;
     }
 
     public function where(string $condition): self {
-        $this->query = $this->query . " AND $condition";
+        $this->query = $this->query . " WHERE $condition";
         return $this;
     }
 

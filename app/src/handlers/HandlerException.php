@@ -11,6 +11,13 @@ use Exception;
         }
 
         private function handlers(): void {
+            if(str_contains($this->message, "Sessão não encontrada")) {
+                $this->code = 410;
+            }
+            if(str_contains($this->message, "Sessão expirada")) {
+                $this->code = 410;
+
+            }
             if(str_contains($this->message, "SQLSTATE[HY000] [2002]")) {
                 $this->code = 500;
             }
