@@ -3,6 +3,7 @@ namespace App\modules\auth;
 
 use App\core\Model;
 use App\modules\auth\AuthValidator;
+use App\modules\users\UserValidator;
 
     class Auth extends Model {
         
@@ -10,9 +11,13 @@ use App\modules\auth\AuthValidator;
         public string $password;
         
         public static function fromMap(array $map): self { 
-            $auth = new self();
-            $auth->email = AuthValidator::email($map['email']) ?? $map['email'];
-            $auth->email = AuthValidator::password($map['password']) ?? $map['password'];
-            return $auth;
+            try {
+                $auth = new self();
+                $auth->email = UserValidator::email($map['email']) ?? $map['email'];
+                $auth->password = UserValidator::password($map['password']) ?? $map['password'];
+                return $auth;
+            } catch (\Throwable $th) {
+                throw $th;
+            }
         }
     }

@@ -23,7 +23,9 @@ use App\modules\users\UserValidator;
 
         public static function fromMap(array $map): self {
             try {
-                $user = new self();
+                $user = new self(); 
+                $user->id = $map['id'] ?? null; 
+                $user->is_administrator = $map['is_administrator'] ?? false;
                 $user->full_name = UserValidator::full_name($map["full_name"]) ?? $map['full_name'];
                 $user->login = UserValidator::login($map["login"]) ?? $map['login'];
                 $user->email = UserValidator::email($map["email"]) ?? $map['email'];
@@ -35,6 +37,9 @@ use App\modules\users\UserValidator;
                 $user->district = UserValidator::district($map["district"]) ?? $map['district'];
                 $user->city = UserValidator::city($map["city"]) ?? $map['city'];
                 $user->state = UserValidator::state($map["state"]) ?? $map['state'];
+                $user->created_at = $map['created_at'] ?? date('Y-m-d H:i:s');
+                $user->updated_at = $map['updated_at'] ?? null;
+                $user->deleted_at = $map['deleted_at'] ?? null;
                 return $user;
             } catch (\Throwable $th) {
                 throw $th;
