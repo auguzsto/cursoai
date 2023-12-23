@@ -11,7 +11,6 @@ use Exception;
                     throw new Exception("Nome completo inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
                 throw $th;
             }
         }
@@ -26,14 +25,13 @@ use Exception;
                     throw new Exception("Login deve conter mínimo de 5 caracteres");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
                 throw $th;
             }
         }
 
         static public function email(string $email): void {
             try {
-                if(empty($email)) { 
+                if(empty($email) || !preg_match('/[@.]/', $email)) { 
                     throw new Exception("Email inválido.");
                 }
 
@@ -41,7 +39,6 @@ use Exception;
                     throw new Exception("Email inválido");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
                 throw $th;
             }
         }
@@ -56,19 +53,17 @@ use Exception;
                     throw new Exception("A senha deve conter mínimo de 8 caracteres");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
         static public function birth(string $birth): void {
             try {
-                if(empty($birth)) { 
+                if(empty($birth) || strlen($birth) != 10) { 
                     throw new Exception("Data de nascimento inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
@@ -78,8 +73,7 @@ use Exception;
                     throw new Exception("Telefone inválida.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
@@ -89,19 +83,17 @@ use Exception;
                     throw new Exception("Endereço inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
         static public function cep(string $cep): void {
             try {
-                if(empty($cep)) { 
+                if(empty($cep) || strlen($cep) != 9) { 
                     throw new Exception("Cep inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
@@ -111,8 +103,7 @@ use Exception;
                     throw new Exception("Bairro inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
 
@@ -122,8 +113,7 @@ use Exception;
                     throw new Exception("Cidade inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
         static public function state(string $state): void {
@@ -132,8 +122,7 @@ use Exception;
                     throw new Exception("Estado inválido.");
                 }
             } catch (\Throwable $th) {
-                header('HTTP/1.1 400');
-                echo $th->getMessage();
+                throw $th;
             }
         }
     }

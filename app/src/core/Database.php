@@ -2,8 +2,9 @@
 
 namespace App\core;
 
-use PDO;
+use App\handlers\HandlerException;
 use Exception;
+use PDO;
 use PDOStatement;
 
 require __DIR__ . "/../../../config.php";
@@ -31,8 +32,8 @@ class Database {
         try {
             $this->con();
 
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
     
@@ -47,7 +48,7 @@ class Database {
             $pdo = new PDO("mysql:host=$host:$port;dbname=cursoai", "$dbuser", "$dbpassword");
             return $pdo;
             
-        } catch (Exception $e) {
+        } catch (\Throwable $th) {
             $pdo = new PDO("mysql:host=$host:$port;", "$dbuser", "$dbpassword");
             return $pdo;
         }
@@ -58,8 +59,8 @@ class Database {
             $pdo = $this->con();
             return $pdo->query($query);
 
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
@@ -71,8 +72,8 @@ class Database {
             
             $pdo->prepare("INSERT INTO $table ($columns) VALUES (:$values)")->execute($columnsAndValues);
 
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
@@ -83,8 +84,8 @@ class Database {
 
             $pdo->prepare("UPDATE $table SET $set = ? WHERE $where")->execute(array_values($columnsAndValues));
             $pdo->prepare("UPDATE $table SET updated_at = ? WHERE $where")->execute([date('Y-m-d H:i:s')]);
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
@@ -95,8 +96,8 @@ class Database {
 
             $pdo->prepare("UPDATE $table SET $set = ? WHERE $where")->execute(array_values($columnsAndValues));
             $pdo->prepare("UPDATE $table SET deleted_at = ? WHERE $where")->execute([date('Y-m-d H:i:s')]);
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
@@ -135,8 +136,8 @@ class Database {
             $pdo = $this->con();
             $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC);
             return $array;
-        } catch (Exception $e) {
-            throw $e;
+        } catch (\Throwable $th) {
+            throw $th;
         }
     }
 
