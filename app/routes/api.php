@@ -1,5 +1,4 @@
 <?php
-error_reporting(0); // SET 0 FOR PROD, SET -1 FOR DEVELOPEMENT
 
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');

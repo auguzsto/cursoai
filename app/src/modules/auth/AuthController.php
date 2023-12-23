@@ -6,6 +6,7 @@ use App\core\Controller;
 use App\modules\users\User;
 use App\handlers\HandlerException;
 use App\modules\users\UserController;
+use App\modules\sessions\SessionController;
 
     class AuthController extends Controller {
 
@@ -26,6 +27,9 @@ use App\modules\users\UserController;
                 if(!password_verify($password, $user->password)) {
                     throw new Exception("Email ou senha inválidos.");
                 }
+
+                $sessionController = new SessionController();
+                $sessionController->create($user);
 
             } catch (\Throwable $th) {
                throw new HandlerException($th->getMessage(), 404);
