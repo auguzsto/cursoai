@@ -1,6 +1,7 @@
 <?php
 
 namespace App\modules\auth;
+use App\modules\sessions\Session;
 use Exception;
 use App\core\Controller;
 use App\modules\users\User;
@@ -43,6 +44,14 @@ use App\modules\sessions\SessionController;
                 $this->db()->insert((array) $user, $this->table);
             } catch (\Throwable $th) {
                throw new HandlerException($th->getMessage(), 400);
+            }
+        }
+
+        public function signOut(): void {
+            try {
+                Session::destroy();
+            } catch (\Throwable $th) {
+                throw $th;
             }
         }
     }

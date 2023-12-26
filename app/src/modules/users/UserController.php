@@ -1,15 +1,14 @@
 <?php
 namespace App\modules\users;
-use Exception;
 use App\core\Controller;
 
     class UserController extends Controller {
 
         protected string $table = "users";
 
-        public function findByEmail(string $email): array {
+        public function findById(int $id): array {
             try {
-                $finder = $this->db()->select("*", $this->table)->where("email = '$email'")->toArray();
+                $finder = $this->db()->select("*", $this->table)->where("id = '$id'")->toSingle();
                 return $finder;
             } catch (\Throwable $th) {
                 throw $th;

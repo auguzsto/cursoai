@@ -44,4 +44,13 @@ use App\modules\sessions\SessionValidator;
                 throw $th;
             }
         }
+
+        static public function destroy(): void {
+            try {
+                unset($token);
+                setcookie('cursoai_session', '', -1, "/");
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
     }

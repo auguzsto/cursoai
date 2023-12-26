@@ -1,12 +1,16 @@
 <?php
 
 use App\modules\sessions\Session;
-error_reporting(0); // SET 0 FOR PROD, SET -1 FOR DEVELOPEMENT
+use App\modules\users\User;
 
-    $router->before("GET|POST", "/", function() {
+    $router->before("GET", "/", function() {
         Session::hasExpired();
     });
 
     $router->get("/", function() {
-        echo "Root view with middleware";
+        try {
+            echo json_encode((array) User::logged());
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     });

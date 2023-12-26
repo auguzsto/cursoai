@@ -4,6 +4,7 @@ namespace App\modules\users;
 
 use App\core\Model;
 use App\handlers\HandlerException;
+use App\modules\sessions\SessionController;
 use App\modules\users\UserValidator;
 
     class User extends Model {
@@ -41,6 +42,15 @@ use App\modules\users\UserValidator;
                 $user->updated_at = $map['updated_at'] ?? null;
                 $user->deleted_at = $map['deleted_at'] ?? null;
                 return $user;
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
+        static public function logged(): self {
+            try {
+                $sessionController = new SessionController();
+                return $sessionController->getUserLogged();
             } catch (\Throwable $th) {
                 throw $th;
             }
