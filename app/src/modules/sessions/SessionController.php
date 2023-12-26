@@ -13,13 +13,11 @@ use Exception;
 
         public function create(User $user): void {
             try {
-                if(Session::hasCookieSession()) {
-                    echo date("Y-m-d H:i:s", $_COOKIE['cursoai_session_expire']);
+                if(Session::hasCookie()) {
                     return;
                 }
-                
 
-                $expire = strtotime("+1 day", strtotime($user->created_at));
+                $expire = strtotime("+1 day", strtotime(date('Y-m-d H:i:s')));
                 $token = password_hash($expire, PASSWORD_BCRYPT);
                 $session = Session::fromMap([
                     "user_id" => $user->id,
@@ -28,8 +26,7 @@ use Exception;
                 ]);
 
                 $this->db()->insert((array) $session, $this->table);
-                setcookie('cursoai_session', $token, $expire, "/");
-                setcookie('cursoai_session_expire', $expire, 0, "/");
+                setcookie('cursoai_session', $token, null, "/");
             } catch (\Throwable $th) {
                 throw $th;
             }
@@ -39,13 +36,16 @@ use Exception;
             try {
                 $token = $_COOKIE['cursoai_session'];
                 $now = date('Y-m-d H:i:s');
+                
                 $finder = $this->db()->select("*", $this->table)->where("token = '$token'")->toArray();
                 if(empty($finder)) {
                     throw new Exception("Sessão não encontrada");
                 }
 
                 $session = Session::fromMap($finder[0]);
-                if($now > $session->expired_at ) {
+                if($now > $session->expired_at) {
+                    unset($token);
+                    setcookie('cursoai_session', '', -1, "/");
                     throw new Exception("Sessão expirada");
                 }
 
