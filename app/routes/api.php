@@ -1,7 +1,5 @@
 <?php
 
-use App\modules\sessions\Session;
-
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');
     header('Access-Control-Allow-Methods: PATCH, PUT, GET, POST, DELETE');
@@ -15,6 +13,7 @@ use App\modules\sessions\Session;
         $router->mount("/auth", function() use ($router) {
             $router->post("/signIn","AuthController@signIn");
             $router->post("/signUp","AuthController@signUp");
+            $router->post("/signOut","AuthController@signOut");
         });
 
     });

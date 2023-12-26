@@ -5,6 +5,7 @@ use App\core\Controller;
 use App\handlers\HandlerException;
 use App\modules\users\User;
 use App\modules\sessions\Session;
+use App\modules\users\UserController;
 use Exception;
 
     class SessionController extends Controller {
@@ -39,6 +40,8 @@ use Exception;
                 
                 $finder = $this->db()->select("*", $this->table)->where("token = '$token'")->toArray();
                 if(empty($finder)) {
+                    unset($token);
+                    setcookie('cursoai_session', '', -1, "/");
                     throw new Exception("Sessão não encontrada");
                 }
 
@@ -51,6 +54,18 @@ use Exception;
 
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);
+            }
+        }
+
+        public function getUserLogged(): User {
+            try {
+                $token = $_COOKIE['cursoai_session'];
+                $userController = new UserController();
+                $userId = $this->db()->select("user_id", "sessions")->where("token = '$token'")->toSingle()['user_id'];
+                return User::fromMap($userController->findById($userId));
+            } catch (\Throwable $th) {
+                echo $userId;
+                throw new HandlerException($th->getMessage(), 500);
             }
         }
     }
