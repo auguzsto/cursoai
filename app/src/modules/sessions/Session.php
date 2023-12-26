@@ -23,9 +23,10 @@ use App\modules\sessions\SessionValidator;
         }
 
         
-        static public function hasCookieSession(): bool {
+        static public function hasCookie(): bool {
             try {
-                if(empty($_COOKIE['cursoai_session'])) {
+                $cookie = $_COOKIE['cursoai_session'];
+                if(empty($cookie)) {
                     return false;
                 }
 
@@ -35,7 +36,7 @@ use App\modules\sessions\SessionValidator;
             }
         }
 
-        static public function hasExpiredSession(): void {
+        static public function hasExpired(): void {
             try {
                 $sessionController = new SessionController();
                 $sessionController->expired();
