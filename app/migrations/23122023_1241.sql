@@ -22,7 +22,7 @@ CREATE TABLE users (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE cursos (
+CREATE TABLE courses (
     id BIGINT AUTO_INCREMENT,
     name TEXT NOT NULL,
     created_at DATETIME NOT NULL,
@@ -31,13 +31,13 @@ CREATE TABLE cursos (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE cursos_users (
+CREATE TABLE courses_users (
     user_id BIGINT NOT NULL,
-    curso_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME, 
     deleted_at DATETIME,
-    FOREIGN KEY (curso_id) REFERENCES cursos(id),
+    FOREIGN KEY (course_id) REFERENCES cursos(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 

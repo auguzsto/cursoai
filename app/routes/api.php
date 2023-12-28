@@ -16,4 +16,10 @@
             $router->post("/signOut","AuthController@signOut");
         });
 
+        // Courses
+        $router->setNamespace("\App\modules\courses");
+        $router->mount("/courses", function() use ($router) {
+            $router->post("/create","CourseController@create");
+        });
+
     });
