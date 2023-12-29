@@ -21,13 +21,10 @@ use App\core\Administrator;
 
         // Courses
         $router->mount("/courses", function() use ($router) {
-            //Middleware
-            $router->before("GET|POST", "/*", function() {
-                Session::hasExpired();
-            });
-
             $router->get("/all","CourseController@findAll");
             $router->post("/create","CourseController@create");
+            $router->patch("/update/(.*)","CourseController@update");
+            $router->delete("/delete/(.*)","CourseController@delete");
             $router->post("/subscribe","CourseUserController@subscribe");
         });
 

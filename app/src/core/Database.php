@@ -89,12 +89,10 @@ class Database {
         }
     }
 
-    public function delete(array $columnsAndValues, string $table, string $where): void {
+    public function delete(string $table, string $where): void {
         try {
             $pdo = $this->con();
-            $set = implode("=?, ", array_keys($columnsAndValues));
-
-            $pdo->prepare("UPDATE $table SET $set = ? WHERE $where")->execute(array_values($columnsAndValues));
+            
             $pdo->prepare("UPDATE $table SET deleted_at = ? WHERE $where")->execute([date('Y-m-d H:i:s')]);
         } catch (\Throwable $th) {
             throw $th;
