@@ -6,7 +6,7 @@ use App\models\User;
 
     class Security {
         
-        static public function isUserAdministrator(): bool {
+        static public function isAdministrator(): bool {
             try {
                 if(empty($_COOKIE['cursoai_session'])) {
                     throw new Exception("Sessão não encontrada");

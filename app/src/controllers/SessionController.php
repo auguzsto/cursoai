@@ -59,12 +59,28 @@ use App\handlers\HandlerException;
         public function getUserLogged(): User {
             try {
                 $token = $_COOKIE['cursoai_session'];
-                $userController = new UserController();
-                $userId = $this->db()->select("user_id", "sessions")->where("token = '$token'")->toSingle()['user_id'];
-                return User::fromMap($userController->findById($userId));
+                return $this->getUserBySession($token);
             } catch (\Throwable $th) {
-                echo $userId;
                 throw new HandlerException($th->getMessage(), 500);
+            }
+        }
+
+        private function getUserBySession(string | null $token): User {
+            try {
+                if(is_null($token)) {
+                    throw new Exception("Sessão expirada");
+                }
+
+                $finder = (object) $this->db()->select("user_id", "sessions")->where("token = '$token'")->toSingle();
+
+                if(is_null($finder)) {
+                    throw new Exception("Sessão não encontrada");
+                }
+
+                $userController = new UserController();
+                return $userController->findById($finder->user_id);
+            } catch (\Throwable $th) {
+                throw $th;
             }
         }
     }
