@@ -35,7 +35,7 @@ use App\handlers\HandlerException;
                     throw new Exception("Usuário já inscrito neste curso.");
                 }
             } catch (\Throwable $th) {
-                throw $th;
+                throw new HandlerException($th->getMessage(), 400);
             }
         }
     }
