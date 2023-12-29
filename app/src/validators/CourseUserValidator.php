@@ -15,9 +15,9 @@ use Exception;
             }
         }
 
-        static public function course(int |null $course_id): void {
+        static public function course(int | null $course_id): void {
             try {
-                if(empty($course_id) || !is_int($course_id)) {
+                if(empty($course_id)) {
                     throw new Exception("Curso inválido");
                 }
             } catch (\Throwable $th) {
