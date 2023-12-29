@@ -5,7 +5,7 @@ use Exception;
 
     class SessionValidator {
 
-        static public function user_id(int $user_id) {
+        static public function user_id(int | null $user_id) {
             try {
                 if(empty($user_id)) {
                     throw new Exception("Usuário inválido.");
@@ -15,7 +15,7 @@ use Exception;
             }
         }
 
-        static public function token(string $token) {
+        static public function token(string | null $token) {
             try {
                 if(empty($token)) {
                     throw new Exception("Token inválido.");
@@ -25,7 +25,7 @@ use Exception;
             }
         }
 
-        static public function expired_at(string $expired_at) {
+        static public function expired_at(string | null $expired_at) {
             try {
                 if(empty($expired_at)) {
                     throw new Exception("Expiração inválida.");

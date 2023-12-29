@@ -5,7 +5,7 @@ use Exception;
 
     class CourseValidator {
 
-        static public function name(string $name): void {
+        static public function name(string | null $name): void {
             try {
                 if(empty($name)) {
                     throw new Exception("Nome inválido");
@@ -17,6 +17,16 @@ use Exception;
 
                 if(strlen($name) < 10) {
                     throw new Exception("Nome deve conter mais de 10 caracteres");
+                }
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
+        static public function author(string | null $name): void {
+            try {
+                if(empty($name)) {
+                    throw new Exception("Autor inválido");
                 }
             } catch (\Throwable $th) {
                 throw $th;

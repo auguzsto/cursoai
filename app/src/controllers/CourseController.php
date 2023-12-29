@@ -1,9 +1,10 @@
 <?php
 namespace App\controllers;
-use App\core\Security;
 use App\models\Course;
 use App\core\Controller;
 use App\handlers\HandlerException;
+use App\core\Security;
+use Exception;
 
     class CourseController extends Controller {
 
@@ -22,7 +23,7 @@ use App\handlers\HandlerException;
         public function findAll(): string {
             try {
                 $courses = $this->db()->select('*', "courses")->where("deleted_at IS NULL")->toArray();
-                return json_encode($courses);
+                return print json_encode($courses);
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);
             }

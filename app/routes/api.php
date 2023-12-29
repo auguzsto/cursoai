@@ -1,4 +1,5 @@
 <?php
+use App\models\Session;
 use App\core\Administrator;
 
     header('Content-Type: application/json');
@@ -20,7 +21,14 @@ use App\core\Administrator;
 
         // Courses
         $router->mount("/courses", function() use ($router) {
+            //Middleware
+            $router->before("GET|POST", "/*", function() {
+                Session::hasExpired();
+            });
+
+            $router->get("/all","CourseController@findAll");
             $router->post("/create","CourseController@create");
+            $router->post("/subscribe","CourseUserController@subscribe");
         });
 
     });

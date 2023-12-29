@@ -25,6 +25,7 @@ CREATE TABLE users (
 CREATE TABLE courses (
     id BIGINT AUTO_INCREMENT,
     name TEXT NOT NULL,
+    author TEXT NOT NULL,
     created_at DATETIME NOT NULL,
     updated_at DATETIME, 
     deleted_at DATETIME,

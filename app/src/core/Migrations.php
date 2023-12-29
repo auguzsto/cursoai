@@ -2,6 +2,7 @@
 
 namespace App\core;
 
+use App\handlers\HandlerException;
 use Exception;
 
     class Migrations {
@@ -17,8 +18,8 @@ use Exception;
                     $migration = str_replace(["CREATE TABLE", "INSERT INTO"], ["CREATE TABLE IF NOT EXISTS", "REPLACE INTO"], $file);
                     $db->query($migration);
                     
-                } catch (Exception $e) {
-                    throw new Exception($e->getMessage());
+                } catch (\Throwable $th) {
+                    throw new HandlerException($th->getMessage(), 500);
                 }
             }
     }
