@@ -1,11 +1,11 @@
 <?php
-namespace App\modules\users;
+namespace App\validators;
 
 use Exception;
 
     class UserValidator {
 
-        static public function full_name(string $full_name): void {
+        static public function full_name(string | null $full_name): void {
             try {
                 if(empty($full_name) || preg_match('/[0-9]/', $full_name)) { 
                     throw new Exception("Nome completo inválido.");
@@ -15,7 +15,7 @@ use Exception;
             }
         }
 
-        static public function login(string $login): void {
+        static public function login(string | null $login): void {
             try {
                 if(empty($login)) { 
                     throw new Exception("Login inválido.");
@@ -29,7 +29,7 @@ use Exception;
             }
         }
 
-        static public function email(string $email): void {
+        static public function email(string | null $email): void {
             try {
                 if(empty($email) || !preg_match('/[@.]/', $email)) { 
                     throw new Exception("Email inválido.");
@@ -43,7 +43,7 @@ use Exception;
             }
         }
 
-        static public function password(string $password): void {
+        static public function password(string | null $password): void {
             try {
                 if(empty($password)) { 
                     throw new Exception("Senha inválido.");
@@ -57,7 +57,7 @@ use Exception;
             }
         }
 
-        static public function birth(string $birth): void {
+        static public function birth(string | null $birth): void {
             try {
                 if(empty($birth) || strlen($birth) != 10) { 
                     throw new Exception("Data de nascimento inválido.");
@@ -67,7 +67,7 @@ use Exception;
             }
         }
 
-        static public function phone(string $phone): void {
+        static public function phone(string | null $phone): void {
             try {
                 if(empty($phone)) { 
                     throw new Exception("Telefone inválida.");
@@ -77,7 +77,7 @@ use Exception;
             }
         }
 
-        static public function address(string $address): void {
+        static public function address(string | null $address): void {
             try {
                 if(empty($address)) { 
                     throw new Exception("Endereço inválido.");
@@ -87,7 +87,7 @@ use Exception;
             }
         }
 
-        static public function cep(string $cep): void {
+        static public function cep(string | null $cep): void {
             try {
                 if(empty($cep) || strlen($cep) != 9) { 
                     throw new Exception("Cep inválido.");
@@ -97,7 +97,7 @@ use Exception;
             }
         }
 
-        static public function district(string $district): void {
+        static public function district(string | null $district): void {
             try {
                 if(empty($district)) { 
                     throw new Exception("Bairro inválido.");
@@ -107,7 +107,7 @@ use Exception;
             }
         }
 
-        static public function city(string $city): void {
+        static public function city(string | null $city): void {
             try {
                 if(empty($city)) { 
                     throw new Exception("Cidade inválido.");
@@ -116,7 +116,7 @@ use Exception;
                 throw $th;
             }
         }
-        static public function state(string $state): void {
+        static public function state(string | null $state): void {
             try {
                 if(empty($state)) { 
                     throw new Exception("Estado inválido.");

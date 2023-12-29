@@ -1,7 +1,7 @@
 <?php
 
-use App\modules\sessions\Session;
-use App\modules\users\User;
+use App\models\User;
+use App\models\Session;
 
     $router->before("GET", "/", function() {
         Session::hasExpired();

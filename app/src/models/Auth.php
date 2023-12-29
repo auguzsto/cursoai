@@ -1,9 +1,7 @@
 <?php
-namespace App\modules\auth;
-
+namespace App\models;
 use App\core\Model;
-use App\modules\auth\AuthValidator;
-use App\modules\users\UserValidator;
+use App\validators\UserValidator;
 
     class Auth extends Model {
         

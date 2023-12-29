@@ -1,7 +1,9 @@
 <?php
-namespace App\modules\sessions;
+namespace App\models;
+
 use App\core\Model;
-use App\modules\sessions\SessionValidator;
+use App\validators\SessionValidator;
+use App\controllers\SessionController;
 
     class Session extends Model {
         

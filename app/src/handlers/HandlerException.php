@@ -14,10 +14,23 @@ use Exception;
             if(str_contains($this->message, "Sessão não encontrada")) {
                 $this->code = 410;
             }
+
             if(str_contains($this->message, "Sessão expirada")) {
                 $this->code = 410;
-
             }
+
+            if(str_contains($this->message, "Você não tem permissão para esta operação")) {
+                $this->code = 405;
+            }
+
+            if(str_contains($this->message, "Usuário já inscrito neste curso.")) {
+                $this->code = 409;
+            }
+
+            if(str_contains($this->message, "SQLSTATE[42S02]")) {
+                $this->code = 500;
+            }
+
             if(str_contains($this->message, "SQLSTATE[HY000] [2002]")) {
                 $this->code = 500;
             }

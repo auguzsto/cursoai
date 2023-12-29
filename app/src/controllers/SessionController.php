@@ -1,12 +1,11 @@
 <?php
-namespace App\modules\sessions;
+namespace App\controllers;
 
+use Exception;
+use App\models\User;
+use App\models\Session;
 use App\core\Controller;
 use App\handlers\HandlerException;
-use App\modules\users\User;
-use App\modules\sessions\Session;
-use App\modules\users\UserController;
-use Exception;
 
     class SessionController extends Controller {
 

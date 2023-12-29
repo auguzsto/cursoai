@@ -141,7 +141,7 @@ class Database {
         }
     }
 
-    public function toSingle(): array {
+    public function toSingle(): array | null {
         $pdo = $this->con();
         $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC)[0];
         return $array;
