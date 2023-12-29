@@ -1,13 +1,12 @@
 <?php
-namespace App\modules\courses;
-use App\core\Validator;
+namespace App\validators;
+
 use Exception;
 
-    class CourseValidator extends Validator {
+    class CourseValidator {
 
         static public function name(string $name): void {
             try {
-                self::isUserAdministrator();
                 if(empty($name)) {
                     throw new Exception("Nome inválido");
                 }

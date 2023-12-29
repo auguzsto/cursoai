@@ -1,4 +1,5 @@
 <?php
+use App\core\Administrator;
 
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');
@@ -8,8 +9,9 @@
 
     $router->mount("/api", function() use ($router) {
 
+        $router->setNamespace("\App\controllers");
+
         // Auth
-        $router->setNamespace("\App\modules\auth");
         $router->mount("/auth", function() use ($router) {
             $router->post("/signIn","AuthController@signIn");
             $router->post("/signUp","AuthController@signUp");
@@ -17,7 +19,6 @@
         });
 
         // Courses
-        $router->setNamespace("\App\modules\courses");
         $router->mount("/courses", function() use ($router) {
             $router->post("/create","CourseController@create");
         });

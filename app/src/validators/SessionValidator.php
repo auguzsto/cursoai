@@ -1,5 +1,5 @@
 <?php
-namespace App\modules\sessions;
+namespace App\validators;
 
 use Exception;
 

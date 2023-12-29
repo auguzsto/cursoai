@@ -2,14 +2,18 @@
 namespace App\core;
 
 use Exception;
-use App\modules\users\User;
+use App\models\User;
 
-    class Validator {
+    class Security {
         
-        protected static function isUserAdministrator(): bool {
+        static public function isUserAdministrator(): bool {
             try {
+                if(empty($_COOKIE['cursoai_session'])) {
+                    throw new Exception("Sessão não encontrada");
+                }
+
                 $user = User::logged();
-                if(empty($user) || !$user->is_administrator) {
+                if(!$user->is_administrator) {
                     throw new Exception("Você não tem permissão para esta operação");
                 }
                 return true;

@@ -1,8 +1,9 @@
 <?php
-namespace App\modules\courses;
+namespace App\controllers;
+use App\core\Security;
+use App\models\Course;
 use App\core\Controller;
 use App\handlers\HandlerException;
-use App\modules\courses\Course;
 
     class CourseController extends Controller {
 
@@ -10,6 +11,7 @@ use App\modules\courses\Course;
 
         public function create(): void {
             try {
+                Security::isUserAdministrator();
                 $course = Course::fromMap($this->request());
                 $this->db()->insert((array) $course, $this->table);
             } catch (\Throwable $th) {

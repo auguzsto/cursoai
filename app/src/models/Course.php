@@ -1,6 +1,8 @@
 <?php
-namespace App\modules\courses;
+namespace App\models;
+
 use App\core\Model;
+use App\validators\CourseValidator;
 
     class Course extends Model {
 

@@ -1,13 +1,12 @@
 <?php
+namespace App\controllers;
 
-namespace App\modules\auth;
-use App\modules\sessions\Session;
 use Exception;
+use App\models\Auth;
+use App\models\User;
+use App\models\Session;
 use App\core\Controller;
-use App\modules\users\User;
 use App\handlers\HandlerException;
-use App\modules\users\UserController;
-use App\modules\sessions\SessionController;
 
     class AuthController extends Controller {
 

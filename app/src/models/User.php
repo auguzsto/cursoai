@@ -1,11 +1,9 @@
 <?php
-
-namespace App\modules\users;
+namespace App\models;
 
 use App\core\Model;
-use App\handlers\HandlerException;
-use App\modules\sessions\SessionController;
-use App\modules\users\UserValidator;
+use App\validators\UserValidator;
+use App\controllers\SessionController;
 
     class User extends Model {
         
