@@ -22,7 +22,7 @@ use App\handlers\HandlerException;
                 ], "courses_users");
 
             } catch (\Throwable $th) {
-                throw new HandlerException($th->getMessage(), 400);
+                throw $th;
             }
         }
 
