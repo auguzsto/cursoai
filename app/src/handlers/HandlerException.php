@@ -15,6 +15,10 @@ use Exception;
                 $this->code = 410;
             }
 
+            if(str_contains($this->message, "Não encontrado")) {
+                $this->code = 404;
+            }
+
             if(str_contains($this->message, "Sessão expirada")) {
                 $this->code = 410;
             }
@@ -41,6 +45,11 @@ use Exception;
 
             if(str_contains($this->message, "SQLSTATE[23000]")) {
                 $this->code = 409;
+            }
+
+            if(str_contains($this->message, "SQLSTATE[42S22]")) {
+                $this->message = "Atributo inválido";
+                $this->code = 500;
             }
             
             header("HTTP/1.1 ". $this->code);
