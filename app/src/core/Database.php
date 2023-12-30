@@ -104,8 +104,13 @@ class Database {
         return $this;
     }
 
-    public function where(string $condition): self {
-        $this->query = $this->query . " WHERE $condition";
+    public function where(string $column): self {
+        $this->query = $this->query . " WHERE $column";
+        return $this;
+    }
+
+    public function equals(string | int $value): self {
+        $this->query = $this->query . " = '$value'";
         return $this;
     }
 

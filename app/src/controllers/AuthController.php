@@ -7,10 +7,15 @@ use App\models\User;
 use App\models\Session;
 use App\core\Controller;
 use App\handlers\HandlerException;
+use App\repositories\UserRepository;
 
     class AuthController extends Controller {
 
-        protected $table = "users";
+        private UserRepository $userRepository;
+
+        function __construct() {
+            $this->userRepository = new UserRepository();
+        }
 
         public function signIn(): void {
             try {
@@ -18,7 +23,7 @@ use App\handlers\HandlerException;
                 $email = $auth->email;
                 $password = $auth->password;
 
-                $finder = $this->db()->select("*", $this->table)->where("email = '$email'")->toArray();
+                $finder = $this->userRepository->findByEmail($email);
                 if(empty($finder)) {
                     throw new Exception("Email ou senha inválidos.");
                 }
@@ -40,7 +45,7 @@ use App\handlers\HandlerException;
             try {
                 $user = User::fromMap($this->request());
                 $user->password = password_hash($user->password, PASSWORD_BCRYPT);
-                $this->db()->insert((array) $user, $this->table);
+                $this->userRepository->save($user);
             } catch (\Throwable $th) {
                throw new HandlerException($th->getMessage(), 400);
             }
