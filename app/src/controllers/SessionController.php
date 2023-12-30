@@ -6,10 +6,18 @@ use App\models\User;
 use App\models\Session;
 use App\core\Controller;
 use App\handlers\HandlerException;
+use App\repositories\SessionRepository;
+use App\repositories\UserRepository;
 
     class SessionController extends Controller {
 
-        protected string $table = "sessions";
+        private SessionRepository $sessionRepository;
+        private UserRepository $userRepository;
+
+        function __construct() {
+            $this->sessionRepository = new SessionRepository();
+            $this->userRepository = new UserRepository();
+        }
 
         public function create(User $user): void {
             try {
@@ -25,7 +33,7 @@ use App\handlers\HandlerException;
                     "expired_at" => date("Y-m-d H:i:s", $expire),
                 ]);
 
-                $this->db()->insert((array) $session, $this->table);
+                $this->sessionRepository->save($session);
                 setcookie('cursoai_session', $token, null, "/");
             } catch (\Throwable $th) {
                 throw $th;
@@ -37,14 +45,9 @@ use App\handlers\HandlerException;
                 $token = $_COOKIE['cursoai_session'];
                 $now = date('Y-m-d H:i:s');
                 
-                $finder = $this->db()->select("*", $this->table)->where("token = '$token'")->toArray();
-                if(empty($finder)) {
-                    unset($token);
-                    setcookie('cursoai_session', '', -1, "/");
-                    throw new Exception("Sessão não encontrada");
-                }
+                $finder = $this->sessionRepository->findByToken($token);
+                $session = Session::fromMap($finder);
 
-                $session = Session::fromMap($finder[0]);
                 if($now > $session->expired_at) {
                     unset($token);
                     setcookie('cursoai_session', '', -1, "/");
@@ -71,14 +74,12 @@ use App\handlers\HandlerException;
                     throw new Exception("Sessão expirada");
                 }
 
-                $finder = (object) $this->db()->select("user_id", "sessions")->where("token = '$token'")->toSingle();
-
+                $finder = $this->sessionRepository->findByToken($token);
                 if(is_null($finder)) {
                     throw new Exception("Sessão não encontrada");
                 }
 
-                $userController = new UserController();
-                return $userController->findById($finder->user_id);
+                return User::fromMap($this->userRepository->findById($finder['user_id']));
             } catch (\Throwable $th) {
                 throw $th;
             }

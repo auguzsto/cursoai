@@ -3,20 +3,20 @@ namespace App\controllers;
 
 use App\core\Controller;
 use App\models\User;
+use App\repositories\UserRepository;
 use Exception;
 
     class UserController extends Controller {
 
-        protected string $table = "users";
+        private UserRepository $userRepository;
 
-        public function findById(int $id): User {
+        function __construct() {
+            $this->userRepository = new UserRepository();
+        }
+
+        public function findById(int $id): array {
             try {
-                $finder = $this->db()->select("*", $this->table)->where("id = '$id'")->toSingle();
-                if(is_null($finder)) {
-                    throw new Exception("Usuário inválido");
-                }
-
-                return User::fromMap($finder);
+                return $this->userRepository->findById($id);
             } catch (\Throwable $th) {
                 throw $th;
             }
