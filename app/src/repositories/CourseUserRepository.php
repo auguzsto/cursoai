@@ -14,9 +14,7 @@ use App\handlers\HandlerException;
 
         public function hasUserSubscribe(User $user, Course $course): void {
             try {
-                $userId = $user->id;
-                $courseId = $course->id;
-                $finder = $this->select("*", "courses_users")->where("user_id = '$userId'")->and("course_id = '$courseId'")->toArray();
+                $finder = $this->select("*", "courses_users")->where("user_id")->equals($user->id)->and("course_id")->equals($course->id)->toArray();
                 if(!empty($finder)) {
                     throw new Exception("Usuário já inscrito neste curso.");
                 }
