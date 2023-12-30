@@ -19,6 +19,15 @@ use App\core\Administrator;
             $router->post("/signOut","AuthController@signOut");
         });
 
+         // Users
+         $router->mount("/users", function() use ($router) {
+            $router->get("/all","UserController@findAll");
+            $router->get("/id/(.*)","UserController@findById");
+            $router->post("/create","UserController@create");
+            $router->patch("/update/(.*)","UserController@update");
+            $router->delete("/delete/(.*)","UserController@delete");
+        });
+
         // Courses
         $router->mount("/courses", function() use ($router) {
             $router->get("/all","CourseController@findAll");

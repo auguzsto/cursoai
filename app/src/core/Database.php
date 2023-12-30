@@ -54,7 +54,7 @@ class Database {
         }
     }
 
-    public function query(string $query): PDOStatement {
+    protected function query(string $query): PDOStatement {
         try {
             $pdo = $this->con();
             return $pdo->query($query);
@@ -64,7 +64,7 @@ class Database {
         }
     }
 
-    public function insert(array $columnsAndValues, string $table): void {
+    protected function insert(array $columnsAndValues, string $table): void {
         try {
             $pdo = $this->con();
             $columns = implode(", ", array_keys($columnsAndValues));
@@ -77,7 +77,7 @@ class Database {
         }
     }
 
-    public function update(array $columnsAndValues, string $table, string $where): void {
+    protected function update(array $columnsAndValues, string $table, string $where): void {
         try {
             $pdo = $this->con();
             $set = implode("=?, ", array_keys($columnsAndValues));
@@ -89,7 +89,7 @@ class Database {
         }
     }
 
-    public function delete(string $table, string $where): void {
+    protected function delete(string $table, string $where): void {
         try {
             $pdo = $this->con();
             
@@ -99,42 +99,42 @@ class Database {
         }
     }
 
-    public function select(string $columns, string $table): self {
+    protected function select(string $columns, string $table): self {
         $this->query = "SELECT $columns FROM $table";
         return $this;
     }
 
-    public function where(string $column): self {
+    protected function where(string $column): self {
         $this->query = $this->query . " WHERE $column";
         return $this;
     }
 
-    public function equals(string | int $value): self {
+    protected function equals(string | int $value): self {
         $this->query = $this->query . " = '$value'";
         return $this;
     }
 
-    public function like(string $value): self {
+    protected function like(string $value): self {
         $this->query = $this->query . " LIKE '%$value%'";
         return $this;
     }
 
-    public function and(string $condition): self {
+    protected function and(string $condition): self {
         $this->query = $this->query . " AND $condition";
         return $this;
     }
 
-    public function orderDesc(string $column): self {
+    protected function orderDesc(string $column): self {
         $this->query = $this->query . " ORDER BY $column DESC";
         return $this;
     }
 
-    public function orderAsc(string $column): self {
+    protected function orderAsc(string $column): self {
         $this->query = $this->query . " ORDER BY $column ASC";
         return $this;
     }
 
-    public function toArray(): array {
+    protected function toArray(): array {
         try {
             $pdo = $this->con();
             $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC);
@@ -144,7 +144,7 @@ class Database {
         }
     }
 
-    public function toSingle(): array | null {
+    protected function toSingle(): array | null {
         $pdo = $this->con();
         $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC)[0];
         return $array;

@@ -43,7 +43,7 @@ use App\repositories\CourseRepository;
             }
         }
 
-        public function findAll(): string {
+        public function findAll(): string | array {
             try {
                 return print json_encode($this->courseRepository->findAll());
             } catch (\Throwable $th) {
