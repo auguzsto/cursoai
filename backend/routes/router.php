@@ -6,6 +6,5 @@ date_default_timezone_set("America/Sao_Paulo"); // DEFAULT CONFIG HOURS
     $router = new Router();
 
     require "api.php";
-    require "view.php";
 
     $router->run();
