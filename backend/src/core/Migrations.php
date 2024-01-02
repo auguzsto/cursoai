@@ -9,9 +9,9 @@ use Exception;
         
         public static function auto(string $fileSQL): void {
             try {
-                $file = file_get_contents("app/migrations/$fileSQL");
+                $file = file_get_contents("backend/migrations/$fileSQL");
                 if(!$file) {
-                    throw new Exception("Ocorreu um problema na migração ao banco de dados.");
+                    throw new Exception("Não foi possível encontrar arquivo de migração.");
                 }
                 $migration = str_replace(["CREATE TABLE", "INSERT INTO"], ["CREATE TABLE IF NOT EXISTS", "REPLACE INTO"], $file);
                 self::getInstance()->query($migration);

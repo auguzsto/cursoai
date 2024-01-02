@@ -1,6 +1,4 @@
 <?php
-use App\models\Session;
-use App\core\Administrator;
 
     header('Content-Type: application/json');
     header('Access-Control-Allow-Origin: *');
