@@ -55,7 +55,7 @@ use App\repositories\UserRepository;
                 }
 
             } catch (\Throwable $th) {
-                throw new HandlerException($th->getMessage(), 400);
+                throw $th;
             }
         }
 

@@ -1,6 +1,7 @@
 <?php
 namespace App\core;
 
+use App\models\Session;
 use Exception;
 use App\models\User;
 
@@ -8,6 +9,7 @@ use App\models\User;
         
         static public function isAdministrator(): bool {
             try {
+                Session::hasExpired();
                 if(empty($_COOKIE['cursoai_session'])) {
                     throw new Exception("Sessão não encontrada");
                 }
