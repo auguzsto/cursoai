@@ -9,7 +9,7 @@ use Exception;
         
         public static function auto(string $fileSQL): void {
             try {
-                $file = file_get_contents("backend/migrations/$fileSQL");
+                $file = file_get_contents("app/migrations/$fileSQL");
                 if(!$file) {
                     throw new Exception("Não foi possível encontrar arquivo de migração.");
                 }
