@@ -9,6 +9,19 @@
             </div>
             <div>
                 <FormLogin />
+                
+                <UDivider class="py-4" label="Não possuo acesso" />
+
+                <UButton
+                    to="/register"
+                    size="lg"
+                    type="submit" 
+                    color="indigo"
+                    variant="solid"
+                    icon="i-heroicons-arrow-right-end-on-rectangle"
+                    class="flex justify-center items-center w-full">
+                    Criar conta
+                </UButton>
             </div>
         </div>
     </div>
