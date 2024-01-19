@@ -66,14 +66,17 @@ const isLoading = ref(false)
 const isError = ref(false)
 
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
-    isLoading.value = true
-    const { data, error} = await useFetch(`${baseURL}/auth/signIn`, {
-        method: 'POST',
-        body: state,
-        credentials: "include"
-    })
-    isLoading.value = false
-    if(error) return isError.value = true
+    isLoading.value = true;
+    const { data, pending, error } = await useAsyncData('auth', 
+        () => $fetch(`${baseURL}/auth/signIn`, {
+            method: 'POST',
+            body: state,
+            credentials: "include"
+        })
+    )
+    isLoading.value = false;
+    
+    if(error.value != null) return isError.value = true;
 }
 
 </script>

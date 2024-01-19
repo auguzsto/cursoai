@@ -68,6 +68,14 @@ use App\repositories\UserRepository;
             }
         }
 
+        public function getUser(): string {
+            try {
+                return print json_encode((array) User::logged());
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
         private function getUserBySession(string | null $token): User {
             try {
                 if(is_null($token)) {

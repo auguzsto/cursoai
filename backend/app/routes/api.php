@@ -16,6 +16,7 @@
             $router->post("/signIn","AuthController@signIn");
             $router->post("/signUp","AuthController@signUp");
             $router->post("/signOut","AuthController@signOut");
+            $router->get("/session", "SessionController@getUser");
         });
 
          // Users

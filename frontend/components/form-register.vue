@@ -1,6 +1,14 @@
 <template>
     <div class="border rounded-lg bg-gray-50 p-4">
-        <h1 class="mb-5 text-2xl font-semibold text-indigo-500">Registar</h1>
+        <div class="flex space-x-2 items-center mb-5">
+            <UButton
+                to="/"
+                variant="ghost"
+                color="indigo"
+                icon="i-heroicons-arrow-left-16-solid"
+            />
+            <h1 class="text-2xl font-semibold text-indigo-500">Registar</h1>
+        </div>
         <UForm :schema="schema" :state="state" @submit="onSubmit" class="grid grid-cols-2 gap-2">
             <div class="space-y-2">
                 <UFormGroup name="email">
