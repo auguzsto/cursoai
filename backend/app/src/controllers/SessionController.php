@@ -26,7 +26,7 @@ use App\repositories\UserRepository;
                 }
 
                 $expire = strtotime("+1 day", strtotime(date('Y-m-d H:i:s')));
-                $token = password_hash($expire, PASSWORD_BCRYPT);
+                $token = base64_encode(json_encode((array) $user));
                 $session = Session::fromMap([
                     "user_id" => $user->id,
                     "token" => $token,
