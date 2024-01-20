@@ -8,7 +8,7 @@
 
         <UButton 
             color="indigo"
-            label="Meus Cursos"
+            label="Cursos"
         />
     </div>
 </template>

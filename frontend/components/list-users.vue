@@ -7,10 +7,17 @@
                     size="xl"
                 />
              </div>
-             <div class="flex justify-start items-center px-2 col-span-2">
-                Content
+             <div class="flex flex-col justify-center px-2 col-span-2">
+                <h1 class="text-gray-100"> {{ user.full_name }} </h1>
+                <div v-show="user.is_administrator">
+                    <UBadge
+                        size="sm"
+                        label="Administrador"
+                        class="bg-gray-900"
+                    />
+                </div>
              </div>
-             <div class="flex justify-end items-center px-2 col-start-3">
+             <div class="flex justify-end items-center px-2 col-start-3 gap-2">
                 <UButton
                     color="ghost"
                     size="sm"

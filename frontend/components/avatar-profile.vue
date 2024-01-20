@@ -18,6 +18,10 @@ const items = [
         icon: "i-heroicons-pencil-square-20-solid",
     },
     {
+        label: "Cursos",
+        icon: "i-heroicons-video-camera-16-solid",
+    },
+    {
         label: "Sair",
         icon: "i-heroicons-arrow-left-start-on-rectangle-16-solid",
         click: () => {
