@@ -20,7 +20,6 @@
                     placeholder="Senha"
                     type="password"/>
             </UFormGroup>
-
             <UButton
                 :loading="isLoading"
                 size="lg"
@@ -77,6 +76,28 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = false;
     
     if(error.value != null) return isError.value = true;
+
+    await getUserSession();
+    
+}
+
+const getUserSession = async () => {
+    const { data, pending, error} = await useAsyncData(
+        'userSession',
+        () => $fetch(`${baseURL}/auth/session`, {
+            method: 'GET',
+            credentials: "include"
+        })
+    )
+
+    if(error.value != null) {
+        return isError.value = true;
+    }
+
+    useUserSession.value = data.value;
+
+    return navigateTo("/dashboard")
+
 }
 
 </script>

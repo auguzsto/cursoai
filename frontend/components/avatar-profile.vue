@@ -20,7 +20,11 @@ const items = [
     {
         label: "Sair",
         icon: "i-heroicons-arrow-left-start-on-rectangle-16-solid",
-        click: () => console.log("Sair")
+        click: () => {
+            const cookie = useCookie('cursoai_session');
+            cookie.value = null
+            return navigateTo('/')
+        }
     }]
 ]
 </script>
