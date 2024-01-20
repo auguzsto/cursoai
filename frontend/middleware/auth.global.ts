@@ -1,4 +1,8 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
+    if(to.path == "/register") {
+        return;
+    }
+    
     checkSession();
     if(to.path != "/"  && useUserSession.value == null) {
         return navigateTo("/");

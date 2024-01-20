@@ -1,10 +1,9 @@
 <template>
     <AppHeader />
-    <div class="grid sm:grid-cols-4 gap-3 py-3">
-        <ListCourses />
+    <div class="grid sm:grid-cols-1 gap-5 py-5">
+        <ListUsers />
     </div>
 </template>
 
 <script setup>
-
 </script>
