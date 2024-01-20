@@ -26,7 +26,7 @@ use App\repositories\UserRepository;
                 }
 
                 $expire = strtotime("+1 day", strtotime(date('Y-m-d H:i:s')));
-                $token = password_hash($expire, PASSWORD_BCRYPT);
+                $token = base64_encode(json_encode((array) $user));
                 $session = Session::fromMap([
                     "user_id" => $user->id,
                     "token" => $token,
@@ -65,6 +65,14 @@ use App\repositories\UserRepository;
                 return $this->getUserBySession($token);
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 500);
+            }
+        }
+
+        public function getUser(): string {
+            try {
+                return print json_encode((array) User::logged());
+            } catch (\Throwable $th) {
+                throw $th;
             }
         }
 

@@ -12,7 +12,7 @@ use App\core\Repository;
         public function findByToken(string | null $token): array | null {
             try {
                 if(is_null($token)) {
-                    throw new Exception("Sessão não encontrada");
+                    throw new Exception("Sessão expirada");
                 }
                 $finder = $this->select("*", $this->table)->where("token")->equals($token)->toArray();
                 return $finder[0];

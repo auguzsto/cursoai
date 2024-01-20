@@ -20,8 +20,8 @@
                     placeholder="Senha"
                     type="password"/>
             </UFormGroup>
-
             <UButton
+                :loading="isLoading"
                 size="lg"
                 type="submit" 
                 color="black"
@@ -32,23 +32,23 @@
             </UButton>
         </UForm>
     </div>
-
-    <UDivider class="py-4" label="Não possuo acesso" />
-
-    <UButton
-        size="lg"
-        type="submit" 
-        color="indigo"
-        variant="solid"
-        icon="i-heroicons-arrow-right-end-on-rectangle"
-        class="flex justify-center items-center w-full">
-        Criar conta
-    </UButton>
+    <div v-show="isError" class="py-5">
+        <UNotification
+            :id="1"
+            color="red"
+            icon="i-heroicons-x-circle"
+            description="Email ou senha inválidos"
+            title="Temos um problema!"
+            :timeout="0"
+            :callback = "() => isError = false"/>
+    </div>
 </template>
 
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
+import { baseURL } from "~/constants";
+import { checkSession } from "~/middleware/auth.global";
 
 const schema = z.object({
     email: z.string({required_error: "Necessário preencher campo"}).email('E-mail inválido'),
@@ -62,7 +62,26 @@ const state = reactive({
     password: undefined,
 });
 
+const isLoading = ref(false)
+const isError = ref(false)
+
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
-    console.log(event.data.email)
+    isLoading.value = true;
+    const { data, pending, error } = await useAsyncData('auth', 
+        () => $fetch(`${baseURL}/auth/signIn`, {
+            method: 'POST',
+            body: state,
+            credentials: "include"
+        })
+    )
+    isLoading.value = false;
+    
+    if(error.value != null) return isError.value = true;
+
+    checkSession();
+
+    return navigateTo("/dashboard")
+    
 }
+
 </script>
