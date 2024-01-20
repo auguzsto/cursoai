@@ -48,6 +48,7 @@
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
+import { checkSession } from "~/middleware/auth.global";
 
 const schema = z.object({
     email: z.string({required_error: "Necessário preencher campo"}).email('E-mail inválido'),
@@ -77,27 +78,10 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     
     if(error.value != null) return isError.value = true;
 
-    await getUserSession();
-    
-}
-
-const getUserSession = async () => {
-    const { data, pending, error} = await useAsyncData(
-        'userSession',
-        () => $fetch(`${baseURL}/auth/session`, {
-            method: 'GET',
-            credentials: "include"
-        })
-    )
-
-    if(error.value != null) {
-        return isError.value = true;
-    }
-
-    useUserSession.value = data.value;
+    checkSession();
 
     return navigateTo("/dashboard")
-
+    
 }
 
 </script>
