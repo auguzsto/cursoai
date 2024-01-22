@@ -9,7 +9,7 @@
             Carregando...
         </h1>
     </div>
-    <div v-for="user in data" :key="user.id">
+    <div v-else v-for="user in data" :key="user.id">
         <div class="border border-indigo-500 p-2 rounded-md bg-indigo-500 grid grid-cols-3">
              <div class="col-end-1 p-1">
                 <UAvatar
@@ -46,7 +46,7 @@
 <script setup>
 import { baseURL } from '~/constants';
 
-const { data, pending, error } = await useFetch(`${baseURL}/users/all`, {
+const { data, pending, error } = useFetch(`${baseURL}/users/all`, {
     method: "GET",
     credentials: "include",
 })

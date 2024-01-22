@@ -1,12 +1,16 @@
 <template>
 
-    <div class="bord" v-if="pending">
-        <UProgress  
-            color="indigo"
-        />
+    <div v-if="pending">
+        <h1>
+            Carregando...
+        </h1>
     </div>
 
-    <div v-else-if="error">Ocorreu algum problema de conexão. Tente novamente</div>
+    <div v-else-if="error">
+        <h1>
+            Ocorreu algum problema de conexão. Tente novamente
+        </h1>
+    </div>
 
     <div v-else v-for="course in data" :key="course.id">
         <NuxtLink :to="`/dashboard/courses/${course.id}`">
@@ -34,7 +38,7 @@
 <script setup>
 import { baseURL } from '~/constants';
 
-const { data, pending, error } = await useFetch(`${baseURL}/courses/all`, {
+const { data, pending, error } = useFetch(`${baseURL}/courses/all`, {
     method: "GET",
     credentials: "include",
 })

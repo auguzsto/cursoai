@@ -1,7 +1,18 @@
 <template>
-    <div v-if="error">Ocorreu algum problema de conexão. Tente novamente</div>
 
-    <div v-for="subscribes in data" :key="subscribes.course_id">
+    <div v-if="pending">
+        <h1>
+            Carregando...
+        </h1>
+    </div>
+    
+    <div v-else-if="error">
+        <h1>
+            Ocorreu algum problema de conexão. Tente novamente
+        </h1>
+    </div>
+
+    <div v-else v-for="subscribes in data" :key="subscribes.course_id">
         <NuxtLink :to="`/dashboard/courses/${subscribes.course_id}`">
             <div class="grid grid-cols-1 border rounded-md p-2 sm:h-[315px]">
                 <div>
@@ -27,7 +38,7 @@
 import { baseURL } from '~/constants';
 
 const userSession = useUserSession.value
-const {data, pending, error } = await useFetch(`${baseURL}/courses/subscribe/user/${userSession.id}`, {
+const {data, pending, error } = useFetch(`${baseURL}/courses/subscribe/user/${userSession.id}`, {
     method: "GET",
     credentials: "include"
 })
