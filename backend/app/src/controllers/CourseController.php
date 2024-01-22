@@ -50,4 +50,12 @@ use App\repositories\CourseRepository;
                 throw new HandlerException($th->getMessage(), 400);
             }
         }
+
+        public function findById(int $id): string | array {
+            try {
+                return print json_encode($this->courseRepository->findById($id));
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
     }

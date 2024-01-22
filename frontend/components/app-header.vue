@@ -5,7 +5,12 @@
                 <div v-show="isBackArrow()">
                     <ArrowBack />
                 </div>
-                <h1 class="text-2xl font-semibold">Olá, {{ userSession.full_name }}</h1>
+                <h1 class="text-2xl font-semibold">Olá, {{ userName }}</h1>
+                <UButton
+                    color="indigo"
+                    icon="i-heroicons-home-16-solid"
+                    to="/dashboard"
+                />
             </div>
             <AvatarProfile />
         </div>
@@ -17,7 +22,6 @@
 
 <script setup lang="ts">
 
-
 const isBackArrow = () => {
     const route = useRoute();
     if(route.path != "/dashboard") {
@@ -28,4 +32,5 @@ const isBackArrow = () => {
 }
 
 const userSession = useUserSession.value;
+const userName = userSession.full_name.split(" ")[0]
 </script>

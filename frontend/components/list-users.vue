@@ -1,8 +1,13 @@
 <template>
     <div v-if="error">
-        <h2>
+        <h1>
             Ocorreu algum problema... Tenta novamente.
-        </h2>
+        </h1>
+    </div>
+    <div v-else-if="pending">
+        <h1>
+            Carregando...
+        </h1>
     </div>
     <div v-for="user in data" :key="user.id">
         <div class="border border-indigo-500 p-2 rounded-md bg-indigo-500 grid grid-cols-3">

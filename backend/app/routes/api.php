@@ -31,10 +31,12 @@
         // Courses
         $router->mount("/courses", function() use ($router) {
             $router->get("/all","CourseController@findAll");
+            $router->get("/id/(.*)","CourseController@findById");
             $router->post("/create","CourseController@create");
             $router->patch("/update/(.*)","CourseController@update");
             $router->delete("/delete/(.*)","CourseController@delete");
             $router->post("/subscribe","CourseUserController@subscribe");
+            $router->get("/subscribe/user/(.*)","CourseUserController@findSubscribeByUserId");
         });
 
     });

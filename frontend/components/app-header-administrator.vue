@@ -9,6 +9,7 @@
         <UButton 
             color="indigo"
             label="Cursos"
+            to="/dashboard/courses/add"
         />
     </div>
 </template>

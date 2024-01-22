@@ -20,6 +20,9 @@ const items = [
     {
         label: "Cursos",
         icon: "i-heroicons-video-camera-16-solid",
+        click: () => {
+            return navigateTo("/dashboard/courses/subscribes")
+        }
     },
     {
         label: "Sair",

@@ -1,13 +1,9 @@
 <template>
     <AppHeader />
     <h1 class="font-bold text-2xl mt-10">
-        Cursos adicionados recentemente
+        Minhas inscrições
     </h1>
     <div class="grid sm:grid-cols-4 gap-3 py-3">
-        <ListCourses />
+        <ListCourseSubscribe />
     </div>
 </template>
-
-<script setup>
-
-</script>
