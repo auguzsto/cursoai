@@ -49,3 +49,6 @@ CREATE TABLE sessions (
     expired_at DATETIME NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_login_at DATETIME;

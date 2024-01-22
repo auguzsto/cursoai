@@ -1,4 +1,9 @@
 <template>
+    <div v-if="error">
+        <h2>
+            Ocorreu algum problema... Tenta novamente.
+        </h2>
+    </div>
     <div v-for="user in data" :key="user.id">
         <div class="border border-indigo-500 p-2 rounded-md bg-indigo-500 grid grid-cols-3">
              <div class="col-end-1 p-1">

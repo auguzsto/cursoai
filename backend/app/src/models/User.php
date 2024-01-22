@@ -19,6 +19,7 @@ use App\controllers\SessionController;
         public string $district;
         public string $city;
         public string $state;
+        public string | null $last_login_at;
 
         public static function fromMap(array $map): self {
             try {
@@ -39,6 +40,7 @@ use App\controllers\SessionController;
                 $user->created_at = $map['created_at'] ?? date('Y-m-d H:i:s');
                 $user->updated_at = $map['updated_at'] ?? null;
                 $user->deleted_at = $map['deleted_at'] ?? null;
+                $user->last_login_at = $map['last_login_at'] ?? null;
                 return $user;
             } catch (\Throwable $th) {
                 throw $th;
