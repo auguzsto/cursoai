@@ -23,10 +23,17 @@ use App\repositories\CourseRepository;
 
         public function findSubscribeByUserId(int $userId): string | array {
             try {
+                $userLogged = User::logged();
                 $finders = $this->courseUserRepository->findSubscribeByUserId($userId);
-                return print json_encode($finders);
+
+                if($userId == $userLogged->id || Security::isAdministrator()) {
+                    return print json_encode($finders);
+                }
+
+                throw new Exception("Você não tem permissão para esta operação");
+                
             } catch (\Throwable $th) {
-                throw $th;
+                throw new HandlerException($th->getMessage(), 405);
             }
         }
 
