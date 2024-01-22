@@ -1,15 +1,8 @@
 <template>
+    <div v-if="error">Ocorreu algum problema de conexão. Tente novamente</div>
 
-    <div class="bord" v-if="pending">
-        <UProgress  
-            color="indigo"
-        />
-    </div>
-
-    <div v-else-if="error">Ocorreu algum problema de conexão. Tente novamente</div>
-
-    <div v-else v-for="course in data" :key="course.id">
-        <NuxtLink :to="`/dashboard/courses/${course.id}`">
+    <div v-for="subscribes in data" :key="subscribes.course_id">
+        <NuxtLink :to="`/dashboard/courses/${subscribes.course_id}`">
             <div class="grid grid-cols-1 border rounded-md p-2 sm:h-[315px]">
                 <div>
                     <img 
@@ -17,26 +10,26 @@
                         src="/images/thumbnail-courses.svg" 
                     />
                 </div>
-                <h1 class="text-lg text-gray-400">{{ course.name }}</h1>
+                <h1 class="text-lg text-gray-400">{{ subscribes.course_name }}</h1>
                 <h1 class="text-sm text-gray-400">Desc</h1>
                     <div class="flex justify-end">
                     <UBadge
                         color="indigo"
-                        :label="course.author"
+                        :label="subscribes.course_author"
                     />
                 </div>
             </div>
         </NuxtLink>
     </div>
-     
 </template>
 
 <script setup>
 import { baseURL } from '~/constants';
 
-const { data, pending, error } = await useFetch(`${baseURL}/courses/all`, {
+const userSession = useUserSession.value
+const {data, pending, error } = await useFetch(`${baseURL}/courses/subscribe/user/${userSession.id}`, {
     method: "GET",
-    credentials: "include",
+    credentials: "include"
 })
 
 </script>

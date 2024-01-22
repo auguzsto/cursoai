@@ -6,17 +6,30 @@ use App\models\User;
 use App\models\Course;
 use App\models\Session;
 use App\core\Controller;
+use App\core\Security;
 use App\models\CourseUser;
 use App\handlers\HandlerException;
+use App\repositories\CourseRepository;
 
     class CourseUserController extends Controller {
 
         private CourseUserRepository $courseUserRepository;
+        private CourseRepository $courseRepository;
 
         function __construct() {
             $this->courseUserRepository = new CourseUserRepository();
+            $this->courseRepository = new CourseRepository();
         }
-        
+
+        public function findSubscribeByUserId(int $userId): string | array {
+            try {
+                $finders = $this->courseUserRepository->findSubscribeByUserId($userId);
+                return print json_encode($finders);
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
         public function subscribe(): void {
             try {
                 $courseUser = CourseUser::fromMap($this->request());

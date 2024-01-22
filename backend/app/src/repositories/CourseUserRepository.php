@@ -1,5 +1,6 @@
 <?php
 namespace App\repositories;
+use PDO;
 use Exception;
 use App\models\User;
 use App\models\Course;
@@ -11,6 +12,35 @@ use App\handlers\HandlerException;
         function __construct() {
             $this->table = "courses_users";
         }
+
+        public function findSubscribeByUserId(int $userId): array {
+            try {
+                $finder = $this->query("
+                select 
+                    cu.user_id as user_id,
+                    cu.course_id as course_id,
+                    cu.created_at as subscribe_created_at,
+                    cu.updated_at as subscribe_updated_at,
+                    cu.deleted_at as subscribe_deleted_at,
+                    c.name as course_name,
+                    c.author as course_author,
+                    c.created_at as course_created_at,
+                    c.updated_at as course_updated_at,
+                    c.deleted_at as course_deleted_at
+                    
+                from 
+                    courses_users cu 
+                join 
+                    courses c on c.id = cu.course_id 
+                and 
+                    cu.user_id = $userId
+                ")->fetchAll(PDO::FETCH_ASSOC);
+                return $finder;
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+        
 
         public function hasUserSubscribe(User $user, Course $course): void {
             try {
