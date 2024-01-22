@@ -33,7 +33,7 @@ use App\handlers\HandlerException;
                 join 
                     courses c on c.id = cu.course_id 
                 and 
-                    cu.user_id = 1
+                    cu.user_id = $userId
                 ")->fetchAll(PDO::FETCH_ASSOC);
                 return $finder;
             } catch (\Throwable $th) {

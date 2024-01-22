@@ -21,20 +21,10 @@ use App\repositories\CourseRepository;
             $this->courseRepository = new CourseRepository();
         }
 
-        public function findSubscribeByUserId(int $userId): string {
+        public function findSubscribeByUserId(int $userId): string | array {
             try {
-                $userLogged = User::logged();
-                if(!Security::isAdministrator()) {
-                    throw new Exception("Você não tem permissão para esta operação");
-                }
-
-                if($userLogged != $userId) {
-                    throw new Exception("Você não tem permissão para esta operação");
-                }
-
                 $finders = $this->courseUserRepository->findSubscribeByUserId($userId);
                 return print json_encode($finders);
-
             } catch (\Throwable $th) {
                 throw $th;
             }
