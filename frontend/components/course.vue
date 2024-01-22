@@ -45,6 +45,7 @@ const { data: subscribe, pending: subscribePending, error: subscribeError } = us
 })
 
 const isSubscribe = ref(false)
+
 onMounted(() => {
     subscribe.value.map((subs) => {
        if(subs.course_id == route.params.id) {
