@@ -35,7 +35,8 @@
             $router->post("/create","CourseController@create");
             $router->patch("/update/(.*)","CourseController@update");
             $router->delete("/delete/(.*)","CourseController@delete");
-            $router->post("/subscribe","CourseUserController@subscribe");
+            $router->post("/subscribe/(.*)","CourseUserController@subscribe");
+            $router->post("/unsubscribe/(.*)","CourseUserController@unsubscribe");
             $router->get("/subscribe/user/(.*)","CourseUserController@findSubscribeByUserId");
         });
 

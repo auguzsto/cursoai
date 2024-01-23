@@ -43,8 +43,17 @@ use Exception;
             }
         }
 
+        public function destroy(int | string $id): void {
+            try {
+                $this->deletePermanent($this->table, "id = '$id'");
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
         public function save(object $object): void {
             try {
+                $object->created_at = date('Y-m-d H:i:s');
                 $this->insert((array) $object, $this->table);
             } catch (\Throwable $th) {
                 throw $th;
