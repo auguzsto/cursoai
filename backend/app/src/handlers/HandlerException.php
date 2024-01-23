@@ -11,6 +11,22 @@ use Exception;
         }
 
         private function handlers(): void {
+            if(str_contains($this->message, "for key 'email'")) {
+                $this->code = 409;
+                $this->message = "E-mail já registrado";
+            }
+
+            if(str_contains($this->message, "for key 'phone'")) {
+                $this->code = 409;
+                $this->message = "Celular já registrado";
+            }
+
+            if(str_contains($this->message, "for key 'login'")) {
+                $this->code = 409;
+                $this->message = "Login já registrado";
+            }
+            
+
             if(str_contains($this->message, "Sessão não encontrada")) {
                 $this->code = 410;
             }

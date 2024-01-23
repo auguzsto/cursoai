@@ -87,9 +87,9 @@ use Exception;
             }
         }
 
-        static public function cep(string | null $cep): void {
+        static public function cep(string | int | null $cep): void {
             try {
-                if(empty($cep) || strlen($cep) != 9) { 
+                if(empty($cep) || strlen($cep) != 8) { 
                     throw new Exception("Cep inválido.");
                 }
             } catch (\Throwable $th) {

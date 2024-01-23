@@ -11,6 +11,16 @@
         </div>
         <UForm :schema="schema" :state="state" @submit="onSubmit" class="grid grid-cols-2 gap-2">
             <div class="space-y-2">
+                <UFormGroup name="login">
+                    <UInput
+                        size="lg"
+                        v-model="state.login" 
+                        icon="i-heroicons-users-16-solid"
+                        color="indigo"
+                        placeholder="Login"
+                        type="text"/>
+                </UFormGroup>
+
                 <UFormGroup name="email">
                     <UInput
                         size="lg"
@@ -34,7 +44,7 @@
                     <UInput
                         size="lg"
                         v-model="state.full_name" 
-                        icon="i-heroicons-at-symbol-16-solid"
+                        icon="i-heroicons-user-16-solid"
                         color="indigo"
                         placeholder="Nome completo"
                         type="text"/>
@@ -44,17 +54,17 @@
                     <UInput 
                         size="lg"
                         v-model="state.phone" 
-                        icon="i-heroicons-key-16-solid"
+                        icon="i-heroicons-phone-16-solid"
                         color="indigo" 
-                        placeholder="Celular"
+                        placeholder="Celular com DDD"
                         type="text"/>
                 </UFormGroup>
 
                 <UFormGroup name="birth">
                     <UInput
                         size="lg"
-                        v-model="state.brith" 
-                        icon="i-heroicons-at-symbol-16-solid"
+                        v-model="state.birth" 
+                        icon="i-heroicons-calendar-days-16-solid"
                         color="indigo"
                         placeholder="Data de nascimento"
                         type="date"/>
@@ -66,7 +76,7 @@
                     <UInput
                         size="lg"
                         v-model="state.cep" 
-                        icon="i-heroicons-at-symbol-16-solid"
+                        icon="i-heroicons-map-pin-16-solid"
                         color="indigo"
                         placeholder="CEP"
                         type="text"/>
@@ -76,7 +86,7 @@
                     <UInput 
                         size="lg"
                         v-model="state.address" 
-                        icon="i-heroicons-key-16-solid"
+                        icon="i-heroicons-map-16-solid"
                         color="indigo" 
                         placeholder="Endereço"
                         type="text"/>
@@ -115,6 +125,7 @@
 
             <div class="col-span-3 mt-2">
                 <UButton
+                    :loading="isLoading"
                     size="lg"
                     type="submit" 
                     color="indigo"
@@ -126,27 +137,54 @@
             </div>
         </UForm>
     </div>
+    <div v-show="isError.active" class="py-5">
+        <UNotification
+            :id="1"
+            color="red"
+            icon="i-heroicons-x-circle"
+            :description="isError.message"
+            title="Temos um problema!"
+            :timeout="0"
+            :callback = "() => isError.active = false"/>
+    </div>
 </template>
 
 <script setup lang="ts">
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
-import { any, z } from "zod";
+import { z } from "zod";
+import { baseURL } from "~/constants";
+
+const onlyNumber = new RegExp(
+  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+
+const onlyString = new RegExp(
+  /^([+]?[\sa-z]+)?(\d{3}|[(]?[a-z]+[)])?([-]?[\s]?[a-z])+$/
+);
 
 const schema = z.object({
+    login: z.string({required_error: "Necessário preencher campo"}).min(5, "Mínimo de 5 caractéres").regex(onlyString, 'Apenas letras minúsculas são permitidas'),
     email: z.string({required_error: "Necessário preencher campo"}).email('E-mail inválido'),
-    password: z.string({required_error: "Necessário preencher campo"}).min(1, 'Necessário preencher campo'),
+    password: z.string({required_error: "Necessário preencher campo"}).min(8, 'Mínimo 8 caracters, números e letras'),
     full_name: z.string({required_error: "Necessário preencher campo"}).min(4, 'Nome inválido'),
-    phone: z.string({required_error: "Necessário preencher campo"}).min(16, "Celular inválido"),
-});
+    phone: z.string({required_error: "Necessário preencher campo"}).regex(onlyNumber, 'Apenas números').length(11, "Celular inválido"),
+    birth: z.string({required_error: "Necessário preencher campo"}),
+    cep: z.string({required_error: "Necessário preencher campo"}).regex(onlyNumber, 'Apenas números').length(8, 'Cep inválido'),
+    address: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
+    district: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
+    city: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
+    state: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
+})
 
 type Schema = z.output<typeof schema>
 
 const state = reactive({
+    login: undefined,
     email: undefined,
     password: undefined,
     full_name: undefined,
     phone: undefined,
-    brith: undefined,
+    birth: undefined,
     cep: undefined,
     address: undefined,
     district: undefined,
@@ -154,7 +192,32 @@ const state = reactive({
     state: undefined
 });
 
+const isLoading = ref(false)
+const isError = ref({
+    active: false,
+    message: '',
+})
+
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
-    console.log(event.data.email)
+    isLoading.value = true;
+    const { data, pending, error } = await useAsyncData(
+        "register",
+        () => $fetch(`${baseURL}/auth/signUp`, {
+            method: "POST",
+            body: state,
+            credentials: "include",
+        })
+    )
+    isLoading.value = false;
+
+    if(error.value != null) {
+        console.log(error);
+        isError.value.active = true;
+        isError.value.message = error.value.data as string;
+        return;
+    }
+
+    
 }
+
 </script>
