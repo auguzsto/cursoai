@@ -9,7 +9,7 @@
         <UButton 
             color="indigo"
             label="Gerenciar cursos"
-            to="/dashboard/courses/add"
+            to="/dashboard/courses/manager"
         />
     </div>
 </template>
