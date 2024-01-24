@@ -11,8 +11,9 @@
     </UDropdown>
 </template>
 
-<script setup>
-const items = [
+<script setup lang="ts">
+const userSession = useUserSession.value
+const items: Array<any> = [
     [{
         label: "Editar",
         icon: "i-heroicons-pencil-square-20-solid",
@@ -23,6 +24,18 @@ const items = [
         click: () => {
             return navigateTo("/dashboard/courses/subscribes")
         }
+    },
+    {
+        class: userSession.is_administrator ? null : "hidden",
+        label: "Gerenciar cursos",
+        icon: "i-heroicons-film-16-solid",
+        click: () => navigateTo("/dashboard/courses/manager")
+    },
+    {
+        class: userSession.is_administrator ? null : "hidden",
+        label: "Gerenciar usuários",
+        icon: "i-heroicons-user-group-16-solid",
+        click: () => navigateTo("/dashboard/users/manager")
     },
     {
         label: "Sair",

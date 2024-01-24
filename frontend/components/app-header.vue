@@ -1,21 +1,13 @@
 <template>
     <div class="grid grid-rows-1 space-y-2">
         <div class="flex justify-between items-center">
-            <div class="flex gap-3">
+            <div class="flex gap-1">
                 <div v-show="isBackArrow()">
                     <ArrowBack />
                 </div>
                 <h1 class="text-2xl font-semibold">Olá, {{ userName }}</h1>
-                <UButton
-                    color="indigo"
-                    icon="i-heroicons-home-16-solid"
-                    to="/dashboard"
-                />
             </div>
             <AvatarProfile />
-        </div>
-        <div class="flex justify-between items-center">
-            <AppHeaderAdministrator />
         </div>
     </div>
 </template>
