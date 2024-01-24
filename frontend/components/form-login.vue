@@ -32,16 +32,6 @@
             </UButton>
         </UForm>
     </div>
-    <div v-show="isError" class="py-5">
-        <UNotification
-            :id="1"
-            color="red"
-            icon="i-heroicons-x-circle"
-            description="Email ou senha inválidos"
-            title="Temos um problema!"
-            :timeout="0"
-            :callback = "() => isError = false"/>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -62,22 +52,17 @@ const state = reactive({
     password: undefined,
 });
 
-const isLoading = ref(false)
-const isError = ref(false)
-
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true;
-    const { data, pending, error } = await useAsyncData('auth', 
-        () => $fetch(`${baseURL}/auth/signIn`, {
+     await $fetch(`${baseURL}/auth/signIn`, {
             method: 'POST',
             body: state,
-            credentials: "include"
+            credentials: "include",
+            onResponseError: (error) => useFetchHandler(error.response._data.error),
         })
-    )
     isLoading.value = false;
     
-    if(error.value != null) return isError.value = true;
-
+    useFetchHandler("Tudo certo!", true)
     checkSession();
 
     return navigateTo("/dashboard")

@@ -36,7 +36,7 @@ import { baseURL } from '~/constants';
 const route = useRoute();
 const useSession = useUserSession.value
 
-const { data, pending, error, refresh } = useAsyncData(
+const { data, pending, error } = useAsyncData(
     "courses-subscribe",
     async () => {
         const [course, subscribe] = await Promise.all([
@@ -55,7 +55,6 @@ const { data, pending, error, refresh } = useAsyncData(
 )
 
 const isSubscribe = ref(false)
-const isLoading = ref(false)
 
 watch(async () => {
     await data.value.subscribe.map((subs) => {
@@ -71,8 +70,10 @@ const actionSubscribe = async () => {
         await $fetch(`${baseURL}/courses/unsubscribe/${route.params.id}`, {
             method: "POST",
             credentials: "include",
+            onResponseError: (error) => useFetchHandler(error.response._data.error)
         })
         isLoading.value = false;
+
         return isSubscribe.value = false;
     }
 
@@ -80,9 +81,11 @@ const actionSubscribe = async () => {
         isLoading.value = true;
         await $fetch(`${baseURL}/courses/subscribe/${route.params.id}`, {
             method: "POST",
-            credentials: "include"
+            credentials: "include",
+            onResponseError: (error) => useFetchHandler(error.response._data.error)
         })
         isLoading.value = false;
+
         return isSubscribe.value = true;
     }
 }
