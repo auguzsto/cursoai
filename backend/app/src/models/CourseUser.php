@@ -5,6 +5,7 @@ use App\core\Model;
 use App\models\User;
 use App\core\Database;
 use App\models\Course;
+use App\repositories\CourseRepository;
 use App\validators\CourseUserValidator;
 use Exception;
 
@@ -29,8 +30,8 @@ use Exception;
 
         private function courseById(int $id): Course {
             try {
-                $db = Database::getInstance();
-                $finder = $db->select("*", "courses")->where("id = '$id'")->toSingle();
+                $courseRepository = new CourseRepository();
+                $finder = $courseRepository->findById($id)[0];
                 if(is_null($finder)) {
                     throw new Exception("Curso inválido");
                 }

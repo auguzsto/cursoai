@@ -32,4 +32,14 @@ use Exception;
                 throw $th;
             }
         }
+
+        static public function description(string | null $description): void {
+            try {
+                if(empty($description)) {
+                    throw new Exception("Descrição inválida");
+                }
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
     }

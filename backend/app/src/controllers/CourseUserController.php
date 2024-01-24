@@ -3,30 +3,29 @@ namespace App\controllers;
 use App\repositories\CourseUserRepository;
 use Exception;
 use App\models\User;
-use App\models\Course;
-use App\models\Session;
 use App\core\Controller;
 use App\core\Security;
-use App\models\CourseUser;
 use App\handlers\HandlerException;
+use App\models\Course;
 use App\repositories\CourseRepository;
 
     class CourseUserController extends Controller {
 
         private CourseUserRepository $courseUserRepository;
         private CourseRepository $courseRepository;
+        private User $user;
 
         function __construct() {
             $this->courseUserRepository = new CourseUserRepository();
             $this->courseRepository = new CourseRepository();
+            $this->user = User::logged();
         }
 
         public function findSubscribeByUserId(int $userId): string | array {
             try {
-                $userLogged = User::logged();
                 $finders = $this->courseUserRepository->findSubscribeByUserId($userId);
 
-                if($userId == $userLogged->id || Security::isAdministrator()) {
+                if($userId == $this->user->id || Security::isAdministrator()) {
                     return print json_encode($finders);
                 }
 
@@ -37,20 +36,40 @@ use App\repositories\CourseRepository;
             }
         }
 
-        public function subscribe(): void {
+        public function subscribe(int $course_id): void {
             try {
-                $courseUser = CourseUser::fromMap($this->request());
-                $this->courseUserRepository->hasUserSubscribe($courseUser->user, $courseUser->course);
+                $findCourseById = $this->courseRepository->findById($course_id);
+
+                if(empty($findCourseById)) {
+                    throw new Exception("Não encontrado");
+                }
+
+                $course = Course::fromMap($findCourseById);
+
+                $this->courseUserRepository->hasUserSubscribe($this->user, $course);
 
                 $object = [
-                        "user_id" => $courseUser->user->id,
-                        "course_id" => $courseUser->course->id,
-                        "created_at" => $courseUser->created_at
+                        "user_id" => $this->user->id,
+                        "course_id" => $course->id,
                     ];
 
                 $this->courseUserRepository->save((object) $object);
             } catch (\Throwable $th) {
-                throw $th;
+                throw new HandlerException($th->getMessage(), 400);
             }
+        }
+
+        public function unsubscribe(int $course_id): void {
+             try {
+                $findByUserId = $this->courseUserRepository->findByUserId($this->user->id);
+                $course = Course::fromMap($this->courseRepository->findById($course_id));
+                
+                if(empty($findByUserId)) {
+                    throw new Exception("Não encontrado");
+                }
+                $this->courseUserRepository->destroyByCourseAndUser($course, $this->user);
+             } catch (\Throwable $th) {
+                throw new HandlerException($th->getMessage(), 400);
+             }
         }
     }

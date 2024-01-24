@@ -2,14 +2,14 @@
     <div v-show="userSession.is_administrator" class="space-x-2">
         <UButton 
             color="indigo"
-            label="Usuários"
+            label="Gerenciar usuários"
             to="/dashboard/users"
         />
 
         <UButton 
             color="indigo"
-            label="Cursos"
-            to="/dashboard/courses/add"
+            label="Gerenciar cursos"
+            to="/dashboard/courses/manager"
         />
     </div>
 </template>

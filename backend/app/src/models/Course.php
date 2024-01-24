@@ -8,6 +8,7 @@ use App\validators\CourseValidator;
 
         public string $name;
         public string $author;
+        public string $description;
 
         static public function fromMap(array $map): self {
             try {
@@ -16,6 +17,7 @@ use App\validators\CourseValidator;
                 $course->id = $map['id'] ?? null;
                 $course->name = CourseValidator::name($map['name']) ?? $map['name'];
                 $course->author = CourseValidator::author($user->full_name) ?? $user->full_name;
+                $course->description = CourseValidator::describe($map['description']) ?? $map['description'];
                 $course->created_at = $map['created_at'] ?? date('Y-m-d H:i:s');
                 $course->updated_at = $map['updated_at'] ?? null;
                 $course->deleted_at = $map['deleted_at'] ?? null;

@@ -99,6 +99,15 @@ class Database {
         }
     }
 
+    protected function deletePermanent(string $table): self {
+        try {
+            $this->query = "DELETE FROM $table";
+            return $this;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     protected function select(string $columns, string $table): self {
         $this->query = "SELECT $columns FROM $table";
         return $this;
@@ -148,5 +157,10 @@ class Database {
         $pdo = $this->con();
         $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC)[0];
         return $array;
+    }
+
+    protected function toExecute(): void {
+        $pdo = $this->con();
+        $pdo->query($this->query)->execute();
     }
 }

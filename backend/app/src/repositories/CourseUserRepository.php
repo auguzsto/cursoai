@@ -13,6 +13,15 @@ use App\handlers\HandlerException;
             $this->table = "courses_users";
         }
 
+        public function findByUserId(int $userId): array {
+            try {
+                $finder = $this->select("*", $this->table)->where("user_id")->equals($userId)->toArray();
+                return $finder;
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+
         public function findSubscribeByUserId(int $userId): array {
             try {
                 $finder = $this->query("
@@ -40,7 +49,6 @@ use App\handlers\HandlerException;
                 throw $th;
             }
         }
-        
 
         public function hasUserSubscribe(User $user, Course $course): void {
             try {
@@ -50,6 +58,14 @@ use App\handlers\HandlerException;
                 }
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);
+            }
+        }
+
+        public function destroyByCourseAndUser(Course $course, User $user): void {
+            try {
+                $this->deletePermanent($this->table)->where("course_id")->equals($course->id)->and("user_id")->equals($user->id)->toExecute();
+            } catch (\Throwable $th) {
+                throw $th;
             }
         }
     }
