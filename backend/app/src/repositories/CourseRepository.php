@@ -1,7 +1,6 @@
 <?php
 namespace App\repositories;
 use App\core\Repository;
-use Exception;
 
 
     class CourseRepository extends Repository {

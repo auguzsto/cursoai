@@ -1,15 +1,5 @@
 <template>
-    <div v-if="error">
-        <h1>
-            Ocorreu algum problema... Tenta novamente.
-        </h1>
-    </div>
-    <div v-else-if="pending">
-        <h1>
-            Carregando...
-        </h1>
-    </div>
-    <div v-else v-for="user in data" :key="user.id">
+    <div>
         <div class="border border-indigo-500 p-2 rounded-md bg-indigo-500 grid grid-cols-3">
              <div class="col-end-1 p-1">
                 <UAvatar
@@ -18,8 +8,8 @@
                 />
              </div>
              <div class="flex flex-col justify-center px-2 col-span-2">
-                <h1 class="text-gray-100"> {{ user.full_name }} </h1>
-                <div v-show="user.is_administrator">
+                <h1 class="text-gray-100"> {{ props.full_name }} </h1>
+                <div v-show="props.is_administrator">
                     <UBadge
                         size="sm"
                         label="Administrador"
@@ -43,12 +33,12 @@
     </div>
 </template>
 
-<script setup>
-import { baseURL } from '~/constants';
+<script setup lang="ts">
 
-const { data, pending, error } = useFetch(`${baseURL}/users/all`, {
-    method: "GET",
-    credentials: "include",
+const props = defineProps({
+    id: String,
+    full_name: String,
+    is_administrator: Boolean,
 })
 
 </script>
