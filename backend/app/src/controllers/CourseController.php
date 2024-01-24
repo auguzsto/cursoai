@@ -61,7 +61,7 @@ use App\repositories\CourseRepository;
 
         public function findByUserId(int $user_id): string | array {
             try {
-                return json_encode($this->courseRepository->findByUserId($user_id));
+                return print json_encode($this->courseRepository->findByUserId($user_id));
             } catch (\Throwable $th) {
                 throw $th;
             }

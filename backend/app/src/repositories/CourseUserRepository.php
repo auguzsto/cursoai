@@ -32,6 +32,7 @@ use App\handlers\HandlerException;
                     cu.updated_at as subscribe_updated_at,
                     cu.deleted_at as subscribe_deleted_at,
                     c.name as course_name,
+                    c.description as course_description,
                     c.author as course_author,
                     c.created_at as course_created_at,
                     c.updated_at as course_updated_at,
