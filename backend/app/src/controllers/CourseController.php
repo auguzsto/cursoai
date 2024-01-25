@@ -4,6 +4,7 @@ use App\models\Course;
 use App\core\Controller;
 use App\handlers\HandlerException;
 use App\core\Security;
+use App\models\Session;
 use App\repositories\CourseRepository;
 
     class CourseController extends Controller {
@@ -45,6 +46,7 @@ use App\repositories\CourseRepository;
 
         public function findAll(): string | array {
             try {
+                Session::hasExpired();
                 return print json_encode($this->courseRepository->findAll());
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);

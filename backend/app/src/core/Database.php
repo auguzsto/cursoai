@@ -143,6 +143,11 @@ class Database {
         return $this;
     }
 
+    protected function isNull(): self {
+        $this->query = $this->query . " IS NULL";
+        return $this;
+    }
+
     protected function toArray(): array {
         try {
             $pdo = $this->con();

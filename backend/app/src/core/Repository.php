@@ -8,7 +8,7 @@ use Exception;
 
         public function findAll(): array {
             try {
-                return $this->select("*", $this->table)->toArray();
+                return $this->select("*", $this->table)->where("deleted_at")->isNull()->toArray();
             } catch (\Throwable $th) {
                 throw $th;
             }
@@ -45,7 +45,7 @@ use Exception;
 
         public function destroy(int | string $id): void {
             try {
-                $this->deletePermanent($this->table, "id = '$id'");
+                $this->deletePermanent($this->table)->where($id)->toExecute();
             } catch (\Throwable $th) {
                 throw $th;
             }

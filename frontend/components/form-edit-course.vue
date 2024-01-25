@@ -24,7 +24,7 @@
                 class="w-full flex justify-center items-center"
                 size="xl"
                 color="indigo"
-                label="Adicionar"
+                label="Salvar"
                 type="submit"
             />
         </UForm>
@@ -35,7 +35,15 @@ import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 import { z } from 'zod';
 import { baseURL } from '~/constants';
 
+const props = defineProps({
+    id: Number,
+    name: String,
+    description: String,
+    refresh: Function,
+})
+
 const schema = z.object({
+    id: z.number(),
     name: 
         z.string({required_error: "Necessário preencher o campo"})
         .min(10, "Nome deve conter mais de 10 caracteres")
@@ -43,28 +51,29 @@ const schema = z.object({
 
     description: 
         z.string({required_error: "Necessário preencher o campo"})
-        .min(50, "Descrição deve conter mais de 50 caracteres")
-        .max(763, "Descrição ultrapassou o limite de 763 caracteres"),
+        .min(50, "Nome deve conter mais de 50 caracteres")
+        .max(763, "Nome ultrapassou o limite de 763 caracteres"),
 })
 
 type Schema = z.output<typeof schema>
 
 const state = reactive({
-    name: undefined,
-    description: undefined,
+    id: props.id,
+    name: props.name,
+    description: props.description,
 })
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true
-    await $fetch(`${baseURL}/courses/create`, {
-        method: "POST",
+    await $fetch(`${baseURL}/courses/update/${state.id}`, {
+        method: "PATCH",
         body: state,
         credentials: "include",
         onRequestError: (error) => useFetchHandler(error.response?._data.error),
     })
     isLoading.value = false
 
-    useFetchHandler("Adicionado", true)
+    useFetchHandler("Atualizado", true)
 
 }
     
