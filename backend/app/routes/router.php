@@ -6,13 +6,5 @@ date_default_timezone_set("America/Sao_Paulo"); // DEFAULT CONFIG HOURS
     $router = new Router();
 
     require "api.php";
-
-    $router->options('/api/auth/signIn', function() {
-        header("HTTP/1.1 200 OK");
-    });
-
-    $router->options('/api/auth/signUp', function() {
-        header("HTTP/1.1 200 OK");
-    });
-
+    
     $router->run();

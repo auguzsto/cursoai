@@ -17,12 +17,12 @@
                         <h1 class="text-sm text-gray-400 line-clamp-3">
                             {{ props.description }}
                         </h1>
-                        <div class="flex justify-start items-center mt-2"> 
+                        <div class="flex justify-between items-center mt-2"> 
                             <UBadge
                                 size="sm"
                                 color="ghost"
                                 variant="outline"
-                                :label="$props.author"
+                                :label="props.author"
                             />
                         </div>
                     </div>
@@ -41,6 +41,7 @@ const props = defineProps({
     name: String,
     author: String,
     description: String,
+    isManager: Boolean,
 })
 
 </script>
