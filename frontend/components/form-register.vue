@@ -137,16 +137,6 @@
             </div>
         </UForm>
     </div>
-    <div v-show="isError.active" class="py-5">
-        <UNotification
-            :id="1"
-            color="red"
-            icon="i-heroicons-x-circle"
-            :description="isError.message"
-            title="Temos um problema!"
-            :timeout="0"
-            :callback = "() => isError.active = false"/>
-    </div>
 </template>
 
 <script setup lang="ts">
@@ -192,30 +182,18 @@ const state = reactive({
     state: undefined
 });
 
-const isLoading = ref(false)
-const isError = ref({
-    active: false,
-    message: '',
-})
 
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true;
-    const { data, pending, error } = await useAsyncData(
-        "register",
-        () => $fetch(`${baseURL}/auth/signUp`, {
-            method: "POST",
-            body: state,
-            credentials: "include",
-        })
-    )
+    await $fetch(`${baseURL}/auth/signUp`, {
+        method: "POST",
+        body: state,
+        credentials: "include",
+        onResponseError: (error) => useFetchHandler(error.response._data.error)
+    })
     isLoading.value = false;
 
-    if(error.value != null) {
-        console.log(error);
-        isError.value.active = true;
-        isError.value.message = error.value.data as string;
-        return;
-    }
+    useFetchHandler("Conta registrada", true)
 
     
 }

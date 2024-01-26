@@ -8,7 +8,7 @@ use Exception;
 
         public function findAll(): array {
             try {
-                return $this->select("*", $this->table)->where("deleted_at")->isNull()->toArray();
+                return $this->select("*", $this->table)->where("deleted_at")->isNull()->orderDesc('created_at')->toArray();
             } catch (\Throwable $th) {
                 throw $th;
             }
