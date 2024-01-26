@@ -22,11 +22,7 @@
                     color="ghost"
                     size="sm"
                     icon="i-heroicons-pencil-square-16-solid"
-                />
-                <UButton
-                    color="ghost"
-                    size="sm"
-                    icon="i-heroicons-trash-16-solid"
+                    @click="props.isOpen"
                 />
              </div>
         </div>
@@ -39,6 +35,7 @@ const props = defineProps({
     id: String,
     full_name: String,
     is_administrator: Boolean,
+    isOpen: Boolean
 })
 
 </script>
