@@ -6,13 +6,17 @@ use App\core\Security;
 use App\handlers\HandlerException;
 use App\models\User;
 use App\repositories\UserRepository;
+use Exception;
 
     class UserController extends Controller {
 
         private UserRepository $userRepository;
 
+        private User $userLogged;
+
         function __construct() {
             $this->userRepository = new UserRepository();
+            $this->userLogged = User::logged();
         }
 
         public function create(): void {
@@ -56,7 +60,10 @@ use App\repositories\UserRepository;
 
         public function findById(int $id): string | array {
             try {
-                Security::isAdministrator();
+                if($this->userLogged->id != $id && !Security::isAdministrator()) {
+                    throw new Exception("Você não tem permissão para esta operação");
+                }
+
                 return print json_encode($this->userRepository->findById($id));
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);
