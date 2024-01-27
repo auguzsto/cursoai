@@ -1,1 +1,0 @@
-import{r as s,ao as t}from"./entry.Bn6fpZtb.js";const l=s(!1);s({active:!1,message:""});let c=(a,e=!1)=>{const o=t();l.value=!1,o.add({title:e?"Sucesso":"Temos um problema",description:a,color:e?"green":"red"})};export{l as i,c as u};
