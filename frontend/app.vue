@@ -7,6 +7,7 @@
 </template>
 
 <script setup>
+import 'dotenv/config'
 onMounted(() => {
   useUserSession;
 })
