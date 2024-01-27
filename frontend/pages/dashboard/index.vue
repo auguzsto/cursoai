@@ -14,6 +14,7 @@
     <div v-else v-for="course in data" :key="course.id">
         <ListCourses 
             :course="(course as Course)"
+            :subscribe="({} as CourseSubscribe)"
         />
         </div>
 </template>
@@ -21,6 +22,7 @@
 <script setup lang="ts">
 import { baseURL } from '~/constants';
 import type { Course } from '~/models/Course';
+import type { CourseSubscribe } from '~/models/CourseSubscribe';
 
 const { data, pending, error }: any = useFetch(`${baseURL}/courses/all`, {
     method: "GET",

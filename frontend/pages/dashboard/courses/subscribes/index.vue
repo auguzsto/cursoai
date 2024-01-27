@@ -13,20 +13,19 @@
     </div>
 
     <div v-else v-for="subscribe in data" :key="subscribe.course_id">
-        <ListCourses 
-            :id="subscribe.course_id"
-            :name="subscribe.course_name"
-            :description="subscribe.course_description"
-            :author="subscribe.course_author"
+        <ListCourses
+            :course="{}"
+            :subscribe="(subscribe as CourseSubscribe)"
         /> 
     </div>
 </template>
 
 <script setup lang="ts">
 import { baseURL } from '~/constants';
+import { CourseSubscribe } from '~/models/CourseSubscribe';
 
 const userSession = useUserSession.value
-const {data, pending, error }: any = useFetch(`${baseURL}/courses/subscribe/user/${userSession.id}`, {
+const {data, pending, error }: any = useFetch(`${baseURL}/courses/subscribe/user/${userSession!.id}`, {
     method: "GET",
     credentials: "include"
 })

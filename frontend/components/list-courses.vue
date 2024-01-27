@@ -1,6 +1,6 @@
 <template>
     <div class="grid sm:grid-cols-1 gap-3 py-3">
-        <NuxtLink :to="`/dashboard/courses/${props.course!.id}`">
+        <NuxtLink :to="`/dashboard/courses/${props.course!.id || props.subscribe!.course_id}`">
             <div class="grid grid-cols-2">
     
                 <div class="col-end-1 border border-indigo-600 rounded-l-md bg-indigo-600">
@@ -12,17 +12,17 @@
                 <div class="col-span-2">
                     <div class="border rounded-r-md border-gray-800 bg-gray-800 h-36 p-3">
                         <h1 class="text-xl font-semibold text-gray-400 truncate">
-                            {{ props.course!.name }}
+                            {{ props.course!.name || props.subscribe!.course_name }}
                         </h1>
                         <h1 class="text-sm text-gray-400 line-clamp-3">
-                            {{ props.course?.description }}
+                            {{ props.course!.description || props.subscribe!.course_description }}
                         </h1>
                         <div class="flex justify-between items-center mt-2"> 
                             <UBadge
                                 size="sm"
                                 color="ghost"
                                 variant="outline"
-                                :label="props.course!.author"
+                                :label="props.course!.author || props.subscribe!.course_author"
                             />
                         </div>
                     </div>
@@ -36,10 +36,12 @@
 
 <script setup lang="ts">
 import { Course } from '~/models/Course';
+import { CourseSubscribe } from '~/models/CourseSubscribe';
 
 
 const props = defineProps({
-    course: Course
+    course: Course,
+    subscribe: CourseSubscribe
 })
 
 </script>

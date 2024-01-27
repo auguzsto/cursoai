@@ -20,12 +20,8 @@
     </div>
 
     <div v-else v-for="course in data" :key="course.id">
-        <ListCourses 
-            :id="course.id"
-            :name="course.name"
-            :description="course.description"
-            :author="course.author"
-            :is-manager="true"
+        <ListCourses
+            :course="(course as Course)"
         />
 
         <div class="flex justify-start items-center gap-2">
