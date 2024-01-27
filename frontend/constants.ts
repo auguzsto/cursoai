@@ -1,1 +1,1 @@
-export const baseURL = process.env.BASE_URL;
+export const baseURL = "http://18.230.62.147:8000/api/";
