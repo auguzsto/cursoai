@@ -1,0 +1,1 @@
+var l=Object.defineProperty;var s=(a,e,t)=>e in a?l(a,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):a[e]=t;var d=(a,e,t)=>(s(a,typeof e!="symbol"?e+"":e,t),t);class c{constructor(){d(this,"created_at");d(this,"updated_at");d(this,"deleted_at")}}export{c as M};
