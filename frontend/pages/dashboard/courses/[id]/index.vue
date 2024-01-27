@@ -11,10 +11,10 @@
     
     <div v-else>
         <Course 
-        :name="data.course.name"
-        :description="data.course.description"
-        :is-subscribe="isSubscribe"
-        :action-subscribe="actionSubscribe"
+            :name="data.course.name"
+            :description="data.course.description"
+            :is-subscribe="isSubscribe"
+            :action-subscribe="actionSubscribe"
         />
     </div>
 </template>

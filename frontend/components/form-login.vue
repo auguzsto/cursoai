@@ -39,18 +39,14 @@ import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
 import { checkSession } from "~/middleware/auth.global";
+import { Auth } from "~/types/Auth";
+import { AuthValidator } from "~/validators/AuthValidator";
 
-const schema = z.object({
-    email: z.string({required_error: "Necessário preencher campo"}).email('E-mail inválido'),
-    password: z.string({required_error: "Necessário preencher campo"}).min(1, 'Necessário preencher campo'),
-});
+const schema = AuthValidator.schema
 
 type Schema = z.output<typeof schema>
 
-const state = reactive({
-    email: undefined,
-    password: undefined,
-});
+const state = reactive<Auth>({})
 
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true;
