@@ -39,7 +39,7 @@ import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
 import { checkSession } from "~/middleware/auth.global";
-import { Auth } from "~/types/Auth";
+import { Auth } from "~/models/Auth";
 import { AuthValidator } from "~/validators/AuthValidator";
 
 const schema = AuthValidator.schema
@@ -65,4 +65,4 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     
 }
 
-</script>
+</script>~/models/Auth

@@ -34,7 +34,7 @@
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 import { z } from 'zod';
 import { baseURL } from '~/constants';
-import { Course } from '~/types/Course';
+import { Course } from '~/models/Course';
 import { CourseValidator } from '~/validators/CourseValidator';
 
 const props = defineProps({
@@ -61,4 +61,4 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
 }
     
-</script>
+</script>~/models/Course

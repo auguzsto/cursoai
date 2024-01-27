@@ -24,7 +24,7 @@
 </template>
 <script setup lang="ts">
 import { baseURL } from '~/constants';
-import type { User } from '~/types/User';
+import type { User } from '~/models/User';
 
 const router = useRoute();
 
@@ -33,4 +33,4 @@ const { data: user, pending, error } = useFetch(`${baseURL}/users/id/${router.pa
     credentials: "include"
 })
 
-</script>
+</script>~/models/User

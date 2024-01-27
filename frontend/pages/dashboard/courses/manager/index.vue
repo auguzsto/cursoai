@@ -87,7 +87,7 @@
 
 <script setup lang="ts">
 import { baseURL } from '~/constants';
-import { Course } from '~/types/Course';
+import { Course } from '~/models/Course';
 
 const userSession = useUserSession.value;
 const isOpen = ref(false)
@@ -97,7 +97,7 @@ let courseRef = reactive<Course>({})
 
 const { data, pending, error, refresh }: any = useAsyncData(
     "manager-courses",
-    async () => await $fetch(`${baseURL}/courses/manager/${userSession.id}`, {
+    async () => await $fetch(`${baseURL}/courses/manager/${userSession!.id}`, {
         method: "GET",
         credentials: "include",
     })
@@ -131,4 +131,4 @@ const closeSlideover = (): void => {
     isOpen.value = false
     return refresh()
 }
-</script>
+</script>~/models/Course

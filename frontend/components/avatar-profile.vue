@@ -17,6 +17,7 @@ const items: Array<any> = [
     [{
         label: "Editar",
         icon: "i-heroicons-pencil-square-20-solid",
+        click: () => navigateTo(`/dashboard/users/manager/${userSession!.id}`)
     },
     {
         label: "Cursos",
@@ -26,13 +27,13 @@ const items: Array<any> = [
         }
     },
     {
-        class: userSession.is_administrator ? null : "hidden",
+        class: userSession!.is_administrator ? null : "hidden",
         label: "Gerenciar cursos",
         icon: "i-heroicons-film-16-solid",
         click: () => navigateTo("/dashboard/courses/manager")
     },
     {
-        class: userSession.is_administrator ? null : "hidden",
+        class: userSession!.is_administrator ? null : "hidden",
         label: "Gerenciar usuários",
         icon: "i-heroicons-user-group-16-solid",
         click: () => navigateTo("/dashboard/users/manager")

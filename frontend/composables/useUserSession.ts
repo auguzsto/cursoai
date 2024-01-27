@@ -1,1 +1,3 @@
-export let useUserSession = ref();
+import { User } from "~/models/User";
+
+export let useUserSession = ref<User>();

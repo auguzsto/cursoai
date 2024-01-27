@@ -33,7 +33,7 @@ const { data, pending, error }: any = useAsyncData(
                 method: "GET",
                 credentials: "include"
             }),
-        $fetch(`${baseURL}/courses/subscribe/user/${useSession.id}`, {
+        $fetch(`${baseURL}/courses/subscribe/user/${useSession!.id}`, {
                 method: "GET",
                 credentials: "include"
             })

@@ -126,7 +126,7 @@
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
-import { User } from "~/types/User";
+import { User } from "~/models/User";
 import { UserValidator } from "~/validators/UserValidator";
 
 const props = defineProps({
@@ -152,4 +152,4 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     useFetchHandler("Atualizado", true)
 }
 
-</script>
+</script>~/models/User
