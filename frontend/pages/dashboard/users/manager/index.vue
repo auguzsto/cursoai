@@ -16,10 +16,8 @@
         </div>
 
         <div v-else v-for="user in data" :key="user.id">
-            <ListUsers 
-                :id="user.id"
-                :full_name="user.full_name"
-                :is_administrator="user.is_administrator"
+            <ListUsers
+                :user="(user as User)"
                 :action="() => navigateTo(`/dashboard/users/manager/${user.id}`)"
             />
         </div>
@@ -28,6 +26,7 @@
 
 <script setup lang="ts">
 import { baseURL } from '~/constants';
+import type { User } from '~/models/User';
 
 const { data, pending, error }: any = useFetch(`${baseURL}/users/all`, {
     method: "GET",

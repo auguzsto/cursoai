@@ -8,8 +8,8 @@
                 />
             </div>
             <div class="flex flex-col justify-center px-2 col-span-2">
-                <h1 class="text-gray-100"> {{ props.full_name }} </h1>
-                <div v-show="props.is_administrator">
+                <h1 class="text-gray-100"> {{ props.user!.full_name }} </h1>
+                <div v-show="props.user!.is_administrator">
                     <UBadge
                         size="sm"
                         label="Administrador"
@@ -30,11 +30,10 @@
 </template>
 
 <script setup lang="ts">
+import { User } from '~/models/User';
 
 const props = defineProps({
-    id: String,
-    full_name: String,
-    is_administrator: Boolean,
+    user: User,
     action: Function
 })
 
