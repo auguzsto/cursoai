@@ -13,16 +13,14 @@
 
     <div v-else v-for="course in data" :key="course.id">
         <ListCourses 
-            :id="course.id"
-            :name="course.name"
-            :author="course.author"
-            :description="course.description"
+            :course="(course as Course)"
         />
         </div>
 </template>
 
 <script setup lang="ts">
 import { baseURL } from '~/constants';
+import type { Course } from '~/models/Course';
 
 const { data, pending, error }: any = useFetch(`${baseURL}/courses/all`, {
     method: "GET",
