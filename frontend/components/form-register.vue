@@ -143,45 +143,14 @@
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
+import { User } from "~/models/User";
+import { UserValidator } from "~/validators/UserValidator";
 
-const onlyNumber = new RegExp(
-  /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
-);
-
-const onlyString = new RegExp(
-  /^([+]?[\sa-z]+)?(\d{3}|[(]?[a-z]+[)])?([-]?[\s]?[a-z])+$/
-);
-
-const schema = z.object({
-    login: z.string({required_error: "Necessário preencher campo"}).min(5, "Mínimo de 5 caractéres").regex(onlyString, 'Apenas letras minúsculas são permitidas'),
-    email: z.string({required_error: "Necessário preencher campo"}).email('E-mail inválido'),
-    password: z.string({required_error: "Necessário preencher campo"}).min(8, 'Mínimo 8 caracters, números e letras'),
-    full_name: z.string({required_error: "Necessário preencher campo"}).min(4, 'Nome inválido'),
-    phone: z.string({required_error: "Necessário preencher campo"}).regex(onlyNumber, 'Apenas números').length(11, "Celular inválido"),
-    birth: z.string({required_error: "Necessário preencher campo"}),
-    cep: z.string({required_error: "Necessário preencher campo"}).regex(onlyNumber, 'Apenas números').length(8, 'Cep inválido'),
-    address: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
-    district: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
-    city: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
-    state: z.string({required_error: "Necessário preencher campo"}).min(2, "Campo inválido"),
-})
+const schema = UserValidator.schema
 
 type Schema = z.output<typeof schema>
 
-const state = reactive({
-    login: undefined,
-    email: undefined,
-    password: undefined,
-    full_name: undefined,
-    phone: undefined,
-    birth: undefined,
-    cep: undefined,
-    address: undefined,
-    district: undefined,
-    city: undefined,
-    state: undefined
-});
-
+const state = reactive<User>({});
 
 let onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true;
@@ -195,7 +164,6 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
     useFetchHandler("Conta registrada", true)
 
-    
 }
 
-</script>
+</script>~/models/User

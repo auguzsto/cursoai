@@ -11,10 +11,10 @@
     
     <div v-else>
         <Course 
-        :name="data.course.name"
-        :description="data.course.description"
-        :is-subscribe="isSubscribe"
-        :action-subscribe="actionSubscribe"
+            :name="data.course.name"
+            :description="data.course.description"
+            :is-subscribe="isSubscribe"
+            :action-subscribe="actionSubscribe"
         />
     </div>
 </template>
@@ -33,7 +33,7 @@ const { data, pending, error }: any = useAsyncData(
                 method: "GET",
                 credentials: "include"
             }),
-        $fetch(`${baseURL}/courses/subscribe/user/${useSession.id}`, {
+        $fetch(`${baseURL}/courses/subscribe/user/${useSession!.id}`, {
                 method: "GET",
                 credentials: "include"
             })

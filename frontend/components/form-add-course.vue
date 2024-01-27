@@ -34,25 +34,14 @@
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types';
 import { z } from 'zod';
 import { baseURL } from '~/constants';
+import { Course } from '~/models/Course';
+import { CourseValidator } from '~/validators/CourseValidator';
 
-const schema = z.object({
-    name: 
-        z.string({required_error: "Necessário preencher o campo"})
-        .min(10, "Nome deve conter mais de 10 caracteres")
-        .max(50, "Nome ultrapassou o limite de 50 caracteres"),
-
-    description: 
-        z.string({required_error: "Necessário preencher o campo"})
-        .min(50, "Descrição deve conter mais de 50 caracteres")
-        .max(763, "Descrição ultrapassou o limite de 763 caracteres"),
-})
+const schema = CourseValidator.schema
 
 type Schema = z.output<typeof schema>
 
-const state = reactive({
-    name: undefined,
-    description: undefined,
-})
+const state = reactive<Course>({})
 
 const onSubmit = async (event: FormSubmitEvent<Schema>) => {
     isLoading.value = true
@@ -68,4 +57,4 @@ const onSubmit = async (event: FormSubmitEvent<Schema>) => {
 
 }
     
-</script>
+</script>~/models/Course

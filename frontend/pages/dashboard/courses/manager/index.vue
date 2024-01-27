@@ -65,16 +65,14 @@
                     <div v-if="chooseOption.option == 1" class="space-y-2">
                         <FormEditCourse
                             class="h-full"
-                            :id="courseRef.id"
-                            :name="courseRef.name"
-                            :description="courseRef.description"
+                            :course="courseRef"
                         />
                         <UButton 
                             size="xl"
                             class="w-full flex justify-center items-center"
                             color="red"
                             label="Deletar"
-                            @click="deleteCourse(courseRef.id)"
+                            @click="deleteCourse(courseRef.id!)"
                         />
                     </div>
 
@@ -89,28 +87,23 @@
 
 <script setup lang="ts">
 import { baseURL } from '~/constants';
+import { Course } from '~/models/Course';
 
 const userSession = useUserSession.value;
 const isOpen = ref(false)
-const chooseOption = ref({
-    option: 0,
-})
+const chooseOption = ref({option: 0})
 
-const courseRef = ref({
-    id: Number,
-    name: String,
-    description: String,
-})
+let courseRef = reactive<Course>({})
 
 const { data, pending, error, refresh }: any = useAsyncData(
     "manager-courses",
-    async () => await $fetch(`${baseURL}/courses/manager/${userSession.id}`, {
+    async () => await $fetch(`${baseURL}/courses/manager/${userSession!.id}`, {
         method: "GET",
         credentials: "include",
     })
 )
 
-const deleteCourse = async (id: NumberConstructor) => {
+const deleteCourse = async (id: number) => {
     isLoading.value = true
     await $fetch(`${baseURL}/courses/delete/${id}`, {
         method: "DELETE",
@@ -122,19 +115,13 @@ const deleteCourse = async (id: NumberConstructor) => {
     useFetchHandler("Deletado", true)
 }
 
-const openEdit = (course: any): void => {
+const openEdit = (course: Course): void => {
     chooseOption.value.option = 1
     isOpen.value = true
-    courseRef.value.id = course.id
-    courseRef.value.name = course.name
-    courseRef.value.description = course.description
+    courseRef = course
 }
 
 const openAdd = (): void => {
-    console.log([
-        chooseOption.value.option,
-        isOpen.value,
-    ])
     chooseOption.value.option = 2
     isOpen.value = true
 }
@@ -144,4 +131,4 @@ const closeSlideover = (): void => {
     isOpen.value = false
     return refresh()
 }
-</script>
+</script>~/models/Course
