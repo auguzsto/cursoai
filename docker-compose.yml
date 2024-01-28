@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  proxy:
+    image: nginx:stable
+    container_name: proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/proxy/nginx.conf:/etc/nginx/nginx.conf
+    links:
+      - backend
+      - frontend
+    depends_on:
+      - backend
+      - frontend
+
+  backend:
+    build: ./backend/
+    container_name: backend
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/:/usr/src/backend
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+      
+  frontend:
+    build: ./frontend/
+    container_name: frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/:/frontend
+    links:
+      - backend
+      - mariadb
+    depends_on:
+      - backend
+      - mariadb
+
+  mariadb:
+    image: mariadb:lts
+    container_name: mariadb
+    restart: always
+    ports:
+      - "3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: password
