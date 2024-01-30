@@ -12,7 +12,7 @@ use App\validators\UserValidator;
             try {
                 $auth = new self();
                 $auth->email = UserValidator::email($map['email']) ?? $map['email'];
-                $auth->password = UserValidator::password($map['password']) ?? $map['password'];
+                $auth->password = $map['password'];
                 return $auth;
             } catch (\Throwable $th) {
                 throw $th;

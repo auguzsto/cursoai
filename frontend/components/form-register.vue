@@ -143,6 +143,7 @@
 import type { FormSubmitEvent } from "@nuxt/ui/dist/runtime/types";
 import { z } from "zod";
 import { baseURL } from "~/constants";
+import { checkSession } from "~/middleware/auth.global";
 import { User } from "~/models/User";
 import { UserValidator } from "~/validators/UserValidator";
 
@@ -160,9 +161,24 @@ let onSubmit = async (event: FormSubmitEvent<Schema>) => {
         credentials: "include",
         onResponseError: (error) => useFetchHandler(error.response._data.error)
     })
+
+    //Auto signin
+    await $fetch(`${baseURL}/auth/signIn`, {
+        method: "POST",
+        body: {
+            "email": state.email,
+            "password": state.password,
+        },
+        credentials: "include",
+        onResponseError: (error) => useFetchHandler(error.response._data.error)
+    })
     isLoading.value = false;
 
     useFetchHandler("Conta registrada", true)
+
+    checkSession()
+
+    navigateTo('/dashboard')
 
 }
 
