@@ -2,7 +2,7 @@
 
     global $config;
     
-    $config['host'] = "127.0.0.1";
-    $config['port'] = "3306";
+    $config['host'] = "localhost";
+    $config['port'] = "3307";
     $config['user'] = "root";
-    $config['password'] = "";
+    $config['password'] = "123456";

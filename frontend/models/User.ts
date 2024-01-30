@@ -3,7 +3,7 @@ import { Model } from "./Model"
 export class User extends Model {
     public id?: number
     public full_name?: string
-    public is_administrator?: boolean
+    public is_administrator?: number | number
     public password?: string
     public email?: string
     public login?: string

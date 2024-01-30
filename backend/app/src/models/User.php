@@ -7,7 +7,7 @@ use App\controllers\SessionController;
 
     class User extends Model {
         
-        public bool $is_administrator = false;
+        public int $is_administrator = 0;
         public string $full_name;
         public string $login;
         public string $email;
@@ -25,7 +25,7 @@ use App\controllers\SessionController;
             try {
                 $user = new self(); 
                 $user->id = $map['id'] ?? null; 
-                $user->is_administrator = $map['is_administrator'] ?? false;
+                $user->is_administrator = $map['is_administrator'] ?? 0;
                 $user->full_name = UserValidator::full_name($map["full_name"]) ?? $map['full_name'];
                 $user->login = UserValidator::login($map["login"]) ?? $map['login'];
                 $user->email = UserValidator::email($map["email"]) ?? $map['email'];
