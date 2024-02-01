@@ -44,7 +44,7 @@ use App\repositories\CourseRepository;
                     throw new Exception("Não encontrado");
                 }
 
-                $course = Course::fromMap($findCourseById);
+                $course = Course::fromMap($findCourseById, $this->user);
 
                 $this->courseUserRepository->hasUserSubscribe($this->user, $course);
 
@@ -62,7 +62,7 @@ use App\repositories\CourseRepository;
         public function unsubscribe(int $course_id): void {
              try {
                 $findByUserId = $this->courseUserRepository->findByUserId($this->user->id);
-                $course = Course::fromMap($this->courseRepository->findById($course_id));
+                $course = Course::fromMap($this->courseRepository->findById($course_id), $this->user);
                 
                 if(empty($findByUserId)) {
                     throw new Exception("Não encontrado");

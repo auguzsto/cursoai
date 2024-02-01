@@ -5,6 +5,7 @@ use App\core\Controller;
 use App\handlers\HandlerException;
 use App\core\Security;
 use App\models\Session;
+use App\models\User;
 use App\repositories\CourseRepository;
 
     class CourseController extends Controller {
@@ -17,7 +18,7 @@ use App\repositories\CourseRepository;
         public function create(): void {
             try {
                 Security::isAdministrator();
-                $course = Course::fromMap($this->request());
+                $course = Course::fromMap($this->request(), User::logged());
                 $this->courseRepository->save($course);
             } catch (\Throwable $th) {
                 throw new HandlerException($th->getMessage(), 400);
@@ -27,7 +28,7 @@ use App\repositories\CourseRepository;
         public function update(int $id): void {
             try {
                 Security::isAdministrator();
-                $course = Course::fromMap($this->request());
+                $course = Course::fromMap($this->request(), User::logged());
                 $course->id = $id;
                 $this->courseRepository->change($course);
             } catch (\Throwable $th) {

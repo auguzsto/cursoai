@@ -11,6 +11,10 @@ use Exception;
                     throw new Exception("Nome inválido");
                 }
 
+                if(preg_match_all('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $name)) {
+                    throw new Exception("Nome não pode conter caracteres especiais");
+                }
+
                 if(strlen($name) > 50) {
                     throw new Exception("Nome ultrapassou o limite de 50 caracteres");
                 }
@@ -23,9 +27,17 @@ use Exception;
             }
         }
 
-        static public function author(string | null $name): void {
+        static public function author(string | null $author): void {
             try {
-                if(empty($name)) {
+                if(empty($author)) {
+                    throw new Exception("Autor inválido");
+                }
+
+                if(preg_match_all('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $author)) {
+                    throw new Exception("Autor não deve conter caracteres especiais");
+                }
+
+                if(strlen($author) < 2) {
                     throw new Exception("Autor inválido");
                 }
             } catch (\Throwable $th) {
@@ -37,6 +49,14 @@ use Exception;
             try {
                 if(empty($description)) {
                     throw new Exception("Descrição inválida");
+                }
+
+                if(preg_match_all('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $description)) {
+                    throw new Exception("Descrição não pode conter caracteres especiais");
+                }
+
+                if(strlen($description) < 15) {
+                    throw new Exception("Descrição deve conter mais de 15 caracteres");
                 }
             } catch (\Throwable $th) {
                 throw $th;
