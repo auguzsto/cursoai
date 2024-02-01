@@ -8,13 +8,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        working-directory: /backend
 
       - uses: php-actions/composer@v6
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@master
+        working-directory: /backend
         with:
           version: 9.6
-          bootstrap: backend/vendor/autoload.php
-          configuration: backend/test/phpunit.xml
+          bootstrap: vendor/autoload.php
+          configuration: test/phpunit.xml
           args: --coverage-text
