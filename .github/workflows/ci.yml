@@ -13,7 +13,7 @@ jobs:
 
       - name: PHPUnit Tests
         uses: php-actions/phpunit@master
-        working-directory: backend
+        working-directory: ./backend
         with:
           version: 9.6
           bootstrap: vendor/autoload.php
