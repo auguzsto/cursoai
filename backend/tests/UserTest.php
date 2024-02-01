@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
                 "email" => "tests.unit@tests.com",
                 "password" => "testpassword2024@",
                 "birth" => "1975-10-30",
-                "phone" => "21983623711",
+                "phone" => "21983623231",
                 "address" => "Street Tests Units",
                 "cep" => "00000000",
                 "district" => "Tests",
@@ -32,13 +32,13 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::login($login));
         }
 
-        public function testCannotBeCreatedFromInvalidLogin() : void {
+        public function testThrowExceptionCaseLoginHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $login = "*#$@!^~#901295";
             UserValidator::login($login);
         }
 
-        public function testCannotBeCreatedFromEmptyLogin() : void {
+        public function testThrowExceptionCaseLoginIsEmpty() : void {
             $this->expectException(Exception::class);
             $login = "";
             UserValidator::login($login);
@@ -49,13 +49,13 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::full_name($full_name));
         }
 
-        public function testCannotBeCreatedFromInvalidFullname() : void {
+        public function testThrowExceptionCaseFullnameHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $full_name = "*#$@!^~#901295";
             UserValidator::full_name($full_name);
         }
 
-        public function testCannotBeCreatedFromEmptyFullname() : void {
+        public function testThrowExceptionCaseFullnameIsEmpty() : void {
             $this->expectException(Exception::class);
             $full_name = "";
             UserValidator::full_name($full_name);
@@ -66,7 +66,7 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::email($email));
         }
 
-        public function testCannotBeCreatedFromEmptyEmail() : void {
+        public function testThrowExceptionCaseEmailIsEmpty() : void {
             $this->expectException(Exception::class);
             $email = "";
             UserValidator::email($email);
@@ -77,13 +77,19 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::password($password));
         }
 
-        public function testCannotBeCreatedFromInvalidPassword() : void {
+        public function testThrowExceptionCasePasswordLess8Characters() : void {
             $this->expectException(Exception::class);
             $password = "test";
             UserValidator::password($password);
         }
 
-        public function testCannotBeCreatedFromEmptyPassword() : void {
+        public function testThrowExceptionCasePasswordDoesNotContainLettersNumbersAndSpecialCharacters() : void {
+            $this->expectException(Exception::class);
+            $password = "testpasswordtestpassword";
+            UserValidator::password($password);
+        }
+
+        public function testThrowExceptionCasePasswordIsEmpty() : void {
             $this->expectException(Exception::class);
             $password = "";
             UserValidator::password($password);
@@ -94,13 +100,19 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::birth($birth));
         }
 
-        public function testCannotBeCreatedFromInvalidBirth() : void {
+        public function testThrowExceptionCaseBirthHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $birth = "1@#$/+]/?!";
             UserValidator::birth($birth);
         }
 
-        public function testCannotBeCreatedFromEmptyBirth() : void {
+        public function testThrowExceptionCaseBirthStringSizeIsDifferentThan10() : void {
+            $this->expectException(Exception::class);
+            $birth = "2023-10-10100";
+            UserValidator::birth($birth);
+        }
+
+        public function testThrowExceptionCaseBirthEmpty() : void {
             $this->expectException(Exception::class);
             $birth = "";
             UserValidator::birth($birth);
@@ -111,13 +123,13 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::phone($phone));
         }
 
-        public function testCannotBeCreatedFromInvalidPhone() : void {
+        public function testThrowExceptionCasePhoneHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $phone = "1@#$/+]/?!~";
             UserValidator::phone($phone);
         }
 
-        public function testCannotBeCreatedFromEmptyPhone() : void {
+        public function testThrowExceptionCasePhoneIsEmpty() : void {
             $this->expectException(Exception::class);
             $phone = "";
             UserValidator::phone($phone);
@@ -128,7 +140,7 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::address($address));
         }
 
-        public function testCannotBeCreatedFromEmptyAddress() : void {
+        public function testThrowExceptionCaseAddressIsEmpty() : void {
             $this->expectException(Exception::class);
             $address = "";
             UserValidator::address($address);
@@ -139,7 +151,13 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::cep($cep));
         }
 
-        public function testCannotBeCreatedFromInvalidCep() : void {
+        public function testThrowExceptionCaseCepStringSizeIsDifferentThan8() : void {
+            $this->expectException(Exception::class);
+            $cep = "000000000";
+            UserValidator::cep($cep);
+        }
+
+        public function testThrowExceptionCaseCepHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $cep = "1@#$/+]/?!~";
             UserValidator::cep($cep);
@@ -156,13 +174,13 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::district($district));
         }
 
-        public function testCannotBeCreatedFromInvalidDiscrict() : void {
+        public function testThrowExceptionCaseDistrictHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $district = "1@#$/+]/?!~";
             UserValidator::district($district);
         }
         
-        public function testCannotBeCreatedFromEmptyDiscrict() : void {
+        public function testThrowExceptionCaseDistrictIsEmpty() : void {
             $this->expectException(Exception::class);
             $district = "";
             UserValidator::district($district);
@@ -173,13 +191,19 @@ use PHPUnit\Framework\TestCase;
             $this->assertNull(UserValidator::state($state));
         }
 
-        public function testCannotBeCreatedFromInvalidState() : void {
+        public function testThrowExceptionCaseStateHasSpecialCharacters() : void {
             $this->expectException(Exception::class);
             $state = "1@#$/+]/?!~";
             UserValidator::state($state);
         }
+
+        public function testThrowExceptionCaseStateStringSizeIsDifferentThan2() : void {
+            $this->expectException(Exception::class);
+            $state = "RJJ";
+            UserValidator::state($state);
+        }
         
-        public function testCannotBeCreatedFromEmptyState() : void {
+        public function testThrowExceptionCaseStateIsEmpty() : void {
             $this->expectException(Exception::class);
             $state = "";
             UserValidator::state($state);
