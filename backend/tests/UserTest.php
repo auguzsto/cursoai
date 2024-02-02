@@ -72,6 +72,12 @@ use PHPUnit\Framework\TestCase;
             UserValidator::email($email);
         }
 
+        public function testThrowExceptionFromInvalidEmail(): void {
+            $this->expectException(Exception::class);
+            $email = "çáã!#%¨&**()+-@ããáâ.com";
+            UserValidator::email($email);
+        }
+
         public function testCanCreatedFromValidPassword(): void {
             $password = "testpassword2024@";
             $this->assertNull(UserValidator::password($password));
