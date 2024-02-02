@@ -2,18 +2,17 @@
 
 namespace App\core;
 
-use App\handlers\HandlerException;
-use Exception;
+use App\interfaces\IDatabase;
 use PDO;
 use PDOStatement;
 
 require __DIR__ . "/../../../config.php";
 
-class Database {
+class SQLiteDatabase implements IDatabase {
 
     private string $query;
 
-    private static Database | null $instance = null;
+    private static SQLiteDatabase | null $instance = null;
 
     public static function getInstance(): self {
 
@@ -39,22 +38,16 @@ class Database {
     
     private function con(): PDO {
         try {
-            global $config;
-            $host = $config['host'];
-            $port = $config['port'];
-            $dbuser = $config['user'];
-            $dbpassword = $config['password'];
-
-            $pdo = new PDO("mysql:host=$host:$port;dbname=cursoai", "$dbuser", "$dbpassword");
+            $pdo = new PDO("sqlite:banco.sq3");
             return $pdo;
             
         } catch (\Throwable $th) {
-            $pdo = new PDO("mysql:host=$host:$port;", "$dbuser", "$dbpassword");
+            $pdo = new PDO("sqlite:curosai.sq3");
             return $pdo;
         }
     }
 
-    protected function query(string $query): PDOStatement {
+    public function query(string $query): PDOStatement {
         try {
             $pdo = $this->con();
             return $pdo->query($query);
@@ -64,7 +57,7 @@ class Database {
         }
     }
 
-    protected function insert(array $columnsAndValues, string $table): void {
+    public function insert(array $columnsAndValues, string $table): void {
         try {
             $pdo = $this->con();
             $columns = implode(", ", array_keys($columnsAndValues));
@@ -77,7 +70,7 @@ class Database {
         }
     }
 
-    protected function update(array $columnsAndValues, string $table, string $where): void {
+    public function update(array $columnsAndValues, string $table, string $where): void {
         try {
             $pdo = $this->con();
             $set = implode("=?, ", array_keys($columnsAndValues));
@@ -89,7 +82,7 @@ class Database {
         }
     }
 
-    protected function delete(string $table, string $where): void {
+    public function delete(string $table, string $where): void {
         try {
             $pdo = $this->con();
             
@@ -99,7 +92,7 @@ class Database {
         }
     }
 
-    protected function deletePermanent(string $table): self {
+    public function deletePermanent(string $table): self {
         try {
             $this->query = "DELETE FROM $table";
             return $this;
@@ -108,47 +101,47 @@ class Database {
         }
     }
 
-    protected function select(string $columns, string $table): self {
+    public function select(string $columns, string $table): self {
         $this->query = "SELECT $columns FROM $table";
         return $this;
     }
 
-    protected function where(string $column): self {
+    public function where(string $column): self {
         $this->query = $this->query . " WHERE $column";
         return $this;
     }
 
-    protected function equals(string | int $value): self {
+    public function equals(string | int $value): self {
         $this->query = $this->query . " = '$value'";
         return $this;
     }
 
-    protected function like(string $value): self {
+    public function like(string $value): self {
         $this->query = $this->query . " LIKE '%$value%'";
         return $this;
     }
 
-    protected function and(string $condition): self {
+    public function and(string $condition): self {
         $this->query = $this->query . " AND $condition";
         return $this;
     }
 
-    protected function orderDesc(string $column): self {
+    public function orderDesc(string $column): self {
         $this->query = $this->query . " ORDER BY $column DESC";
         return $this;
     }
 
-    protected function orderAsc(string $column): self {
+    public function orderAsc(string $column): self {
         $this->query = $this->query . " ORDER BY $column ASC";
         return $this;
     }
 
-    protected function isNull(): self {
+    public function isNull(): self {
         $this->query = $this->query . " IS NULL";
         return $this;
     }
 
-    protected function toArray(): array {
+    public function toArray(): array {
         try {
             $pdo = $this->con();
             $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC);
@@ -158,13 +151,13 @@ class Database {
         }
     }
 
-    protected function toSingle(): array | null {
+    public function toSingle(): array | null {
         $pdo = $this->con();
         $array = $pdo->query($this->query)->fetchAll(PDO::FETCH_ASSOC)[0];
         return $array;
     }
 
-    protected function toExecute(): void {
+    public function toExecute(): void {
         $pdo = $this->con();
         $pdo->query($this->query)->execute();
     }
