@@ -2,8 +2,9 @@
 namespace App\core;
 
 use Exception;
+use App\core\MySQLDatabase;
 
-    abstract class Repository extends Database {
+    abstract class Repository extends MySQLDatabase {
         public string | null $table = null;
 
         public function findAll(): array {

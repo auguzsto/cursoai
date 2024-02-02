@@ -5,7 +5,7 @@ namespace App\core;
 use App\handlers\HandlerException;
 use Exception;
 
-    class Migrations extends Database {
+    class Migrations extends Repository {
         
         public static function auto(string $fileSQL): void {
             try {

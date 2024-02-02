@@ -51,7 +51,7 @@ use Exception;
                     throw new Exception("Descrição inválida");
                 }
 
-                if(preg_match_all('/[#$%^&*()+=\-\[\]\';,.\/{}|":<>?~\\\\]/', $description)) {
+                if(preg_match_all('/[#$%^&*()+=\-\[\]\';\/{}|":<>?~\\\\]/', $description)) {
                     throw new Exception("Descrição não pode conter caracteres especiais");
                 }
 

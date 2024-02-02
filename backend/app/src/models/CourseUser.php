@@ -3,7 +3,6 @@ namespace App\models;
 
 use App\core\Model;
 use App\models\User;
-use App\core\Database;
 use App\models\Course;
 use App\repositories\CourseRepository;
 use App\validators\CourseUserValidator;
@@ -35,7 +34,7 @@ use Exception;
                 if(is_null($finder)) {
                     throw new Exception("Curso inválido");
                 }
-                return Course::fromMap($finder);
+                return Course::fromMap($finder, User::logged());
             } catch (\Throwable $th) {
                 throw $th;
             }
