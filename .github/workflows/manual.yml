@@ -17,4 +17,6 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     - name: Send greeting
-      run: echo "Hello ${{ inputs.name }}"
+      run: |
+        echo "Hello ${{ inputs.name }}"
+        ping 172.17.0.1 -c 4
